@@ -8,11 +8,84 @@ library(igraph)
 library(mefa4)
 library(stargazer)
 
+
 # software space to relatedness matrix
-ssel <- fread("../outputs/software_space_edgelist.csv") %>% select(-drop)
+ssel <- fread("../outputs/software_space_edgelist2020-2021.csv") %>% select(-drop)
 ssel$proximity <- 1
 relatedness <- as.matrix(get.adjacency(graph.data.frame(ssel)))
+languages <- unique(c(ssel$language_1, ssel$language_2))
 
+
+# Mcp matrix -- relatedness density
+mcps <- fread("../outputs/entry_table.csv")
+mcps <- subset(mcps, language %in% languages)
+  
+periods <- unique(mcps$semester_id)
+rel_dens <- list()
+for(p in 1:length(periods)){
+  print(periods[p])
+  mcp <- subset(mcps, semester_id == periods[p])
+  mcp <- select(mcp, iso2_code, language, rca01)
+  mcp_mat <- EconGeo::get_matrix(mcp)
+  
+  rel_density <- EconGeo::relatedness_density(mcp_mat, relatedness)
+  rel_density <- data.table(Melt(rel_density))
+  colnames(rel_density) <- c("iso2_code", "language", "rel_density")
+  rel_density$semester_id <- periods[p]
+  #rel_density$rel_density[is.na(rel_density$rel_density)==1] <- 0
+  rel_dens[[p]] <- rel_density
+}
+rel_dens <- rbindlist(rel_dens)
+
+
+# add relatedness density to entry table
+edf <- merge(
+  mcps,
+  rel_dens,
+  by = c("semester_id", "iso2_code", "language"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+edf$rel_density[is.na(edf$rel_density)==1] <- 0
+
+
+# complexity
+cdf <- fread("../outputs/complexity_table2020-2021.csv")
+cdf <- select(cdf, language, pci) %>% unique()
+edf <- merge(
+  edf,
+  cdf,
+  by = "language",
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+summary(m1 <- lm(rca_entry ~ rel_density, data = edf))
+summary(m1_fe <- lm(rca_entry ~ rel_density + as.factor(iso2_code), data = edf))
+summary(m2 <- lm(rca_entry ~ rel_density + pci, data = edf))
+summary(m2_fe <- lm(rca_entry ~ rel_density + pci + as.factor(iso2_code), data = edf))
+
+
+stargazer(
+  m1,
+  m1_fe,
+  m2,
+  m2_fe,
+  omit = c("iso2_code"),
+  add.lines=list(c("Country FE", "No", "Yes", "No", "Yes")),
+  #type="text"
+  out = "../outputs/baseline_model_v2.html"
+)
+
+
+
+
+
+
+
+
+### previous version -- kept for now ###
 
 # complexity table to Mcp matrix
 cdf <- fread("../outputs/complexity_table2020.csv")
