@@ -65,15 +65,22 @@ summary(m1 <- lm(rca_entry ~ rel_density, data = edf))
 summary(m1_fe <- lm(rca_entry ~ rel_density + as.factor(iso2_code), data = edf))
 summary(m2 <- lm(rca_entry ~ rel_density + pci, data = edf))
 summary(m2_fe <- lm(rca_entry ~ rel_density + pci + as.factor(iso2_code), data = edf))
-
+summary(m3_fe <- lm(rca_entry ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = edf))
+summary(m4_fe <- lm(rca_entry ~ rel_density + pci + as.factor(iso2_code) + as.factor(language) + as.factor(semester_id), data = edf))
 
 stargazer(
   m1,
   m1_fe,
   m2,
   m2_fe,
-  omit = c("iso2_code"),
-  add.lines=list(c("Country FE", "No", "Yes", "No", "Yes")),
+  m3_fe,
+  m4_fe,
+  omit = c("iso2_code", "language", "semester_id"),
+  add.lines=list(
+    c("Country FE", "No", "Yes", "No", "Yes", "Yes", "Yes"),
+    c("Language FE", "No", "No", "No", "No", "Yes", "Yes"),
+    c("Period FE", "No", "No", "No", "No", "No", "Yes")
+  ),
   #type="text"
   out = "../outputs/baseline_model_v2.html"
 )
