@@ -42,7 +42,7 @@ m6<-feols(rca_entry ~ rel_density+neighbor_related+rel_density:neighbor_related 
           data=fdf,
           se="DK")
 
-etable(m1,m2,m3,m4,m5,m6,file = '../johanneswachs/Dropbox/majorprojects/empirical_software/github_innovation_graph/git_complexity/outputs/interaction_model_v2.html')
+etable(m1,m2,m3,m4,m5,m6,file = '../johanneswachs/Dropbox/majorprojects/empirical_software/github_innovation_graph/git_complexity/outputs/interaction_model_v2.tex')
 
 
 
