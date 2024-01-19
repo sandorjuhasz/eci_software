@@ -7,7 +7,8 @@ library(dplyr)
 library(igraph)
 library(mefa4)
 library(stargazer)
-
+library(lmtest)
+library(sandwich)
 
 # software space to relatedness matrix
 ssel <- fread("../outputs/software_space_edgelist2020-2021.csv") %>% select(-drop)
@@ -17,21 +18,21 @@ languages <- unique(c(ssel$language_1, ssel$language_2))
 
 
 # Mcp matrix -- relatedness density
-mcps <- fread("../outputs/entry_table.csv")
+mcps <- fread("../outputs/entry_table_2periods.csv")
 mcps <- subset(mcps, language %in% languages)
   
-periods <- unique(mcps$semester_id)
+periods <- unique(mcps$year)
 rel_dens <- list()
 for(p in 1:length(periods)){
   print(periods[p])
-  mcp <- subset(mcps, semester_id == periods[p])
+  mcp <- subset(mcps, year == periods[p])
   mcp <- select(mcp, iso2_code, language, rca01)
   mcp_mat <- EconGeo::get_matrix(mcp)
   
   rel_density <- EconGeo::relatedness_density(mcp_mat, relatedness)
   rel_density <- data.table(Melt(rel_density))
   colnames(rel_density) <- c("iso2_code", "language", "rel_density")
-  rel_density$semester_id <- periods[p]
+  rel_density$year <- periods[p]
   #rel_density$rel_density[is.na(rel_density$rel_density)==1] <- 0
   rel_dens[[p]] <- rel_density
 }
@@ -42,12 +43,11 @@ rel_dens <- rbindlist(rel_dens)
 edf <- merge(
   mcps,
   rel_dens,
-  by = c("semester_id", "iso2_code", "language"),
+  by = c("year", "iso2_code", "language"),
   all.x = TRUE,
   all.y = FALSE
 )
 edf$rel_density[is.na(edf$rel_density)==1] <- 0
-
 
 # complexity
 cdf <- fread("../outputs/complexity_table2020-2021.csv")
@@ -61,33 +61,70 @@ edf <- merge(
 )
 
 
-summary(m1 <- lm(entry010 ~ rel_density, data = edf))
-summary(m1_fe <- lm(entry010 ~ rel_density + as.factor(iso2_code), data = edf))
-summary(m2 <- lm(entry010 ~ rel_density + pci, data = edf))
-summary(m2_fe <- lm(entry010 ~ rel_density + pci + as.factor(iso2_code), data = edf))
-summary(m3_fe <- lm(entry010 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = edf))
-summary(m4_fe <- lm(entry010 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language) + as.factor(semester_id), data = edf))
-
-stargazer(
-  m1,
-  m1_fe,
-  m2,
-  m2_fe,
-  m3_fe,
-  m4_fe,
-  omit = c("iso2_code", "language", "semester_id"),
-  add.lines=list(
-    c("Country FE", "No", "Yes", "No", "Yes", "Yes", "Yes"),
-    c("Language FE", "No", "No", "No", "No", "Yes", "Yes"),
-    c("Period FE", "No", "No", "No", "No", "No", "Yes")
-  ),
-  #type="text"
-  out = "../outputs/baseline_model_entry010.html"
+# export
+write.table(edf,
+            paste0("../outputs/entry_reg_table_2periods.csv"),
+            row.names = FALSE,
+            col.names = TRUE,
+            sep = ";"
 )
 
 
 
+# variable manipulation
+edf$rel_density <- scale(edf$rel_density)
+edf$pci <- scale(edf$pci)
 
+
+
+
+
+summary(m1 <- lm(entry01 ~ rel_density, data = edf))
+summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = edf))
+summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = edf))
+summary(m2 <- lm(entry01 ~ rel_density + pci, data = edf))
+summary(m2_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code), data = edf))
+#summary(m3_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = edf))
+#summary(m4_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language) + as.factor(semester_id), data = edf))
+
+stargazer(
+  m1,
+  m1_fe,
+  m1_fe2,
+  m2,
+  m2_fe,
+  #m3_fe,
+  omit = c("iso2_code", "language"),
+  add.lines=list(
+    c("Country FE", "No", "Yes", "Yes", "No", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No")
+  ),
+  #type="text"
+  out = "../outputs/baseline_model_entry01.html"
+)
+
+cm1 <- coeftest(m1, vcov = vcovCL, cluster = ~language)
+cm1_fe <- coeftest(m1_fe, vcov = vcovCL, cluster = ~language)
+#cm1_fe2 <- coeftest(m1_fe2, vcov = vcovCL, cluster = ~language)
+cm2 <- coeftest(m2, vcov = vcovCL, cluster = ~language)
+cm2_fe <- coeftest(m2_fe, vcov = vcovCL, cluster = ~language)
+cm3_fe <- coeftest(m3_fe, vcov = vcovCL, cluster = ~language)
+
+stargazer(
+  cm1,
+  cm1_fe,
+  m1_fe2,
+  cm2,
+  cm2_fe,
+  cm3_fe,
+  omit = c("iso2_code", "language"),
+  add.lines=list(
+    c("Country FE", "No", "Yes", "No", "Yes", "Yes"),
+    c("Language FE", "No", "No", "No", "No", "Yes")
+  ),
+  #type="text"
+  out = "../outputs/baseline_model_entry01_cse.html"
+)
 
 
 
