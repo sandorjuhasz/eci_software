@@ -65,7 +65,31 @@ df <- subset(df, is.na(tradeflow_baci) == FALSE)
 df$log_gh_vol[is.na(df$log_gh_vol)==1] <- 0
 
 
-#  
+
+# baci and github are UNDIRECTED
+ud_baci1 <- trade_df %>%
+  dplyr::select(country_id_o, country_id_d, tradeflow_baci) %>%
+  data.table()
+ud_baci2 <- ud_baci1 %>%
+  rename(
+    country_id_d =country_id_o, country_id_o = country_id_d
+  ) %>%
+  dplyr::select(country_id_o, country_id_d, tradeflow_baci) %>%
+  data.table()
+
+ud_baci <- rbind(ud_baci1, ud_baci2)
+ud_baci <- ud_baci %>%
+  dplyr::filter(country_id_o < country_id_d) %>%
+  group_by(country_id_o, country_id_d) %>%
+  summarise(tradeflow_baci = mean(tradeflow_baci, na.rm = TRUE)) %>%
+  data.table()
+
+
+
+
+
+
+# models  
 summary(sci_m1 <- lm(log_sci ~ log_dist + log_pop_o + log_pop_d, data = df))
 summary(trade_m1 <- lm(log_baci ~ log_dist + log_pop_o + log_pop_d, data = df))
 summary(gh_m1 <- lm(log_gh_vol ~ log_dist + log_pop_o + log_pop_d, data = df))
