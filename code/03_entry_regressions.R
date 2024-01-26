@@ -17,6 +17,17 @@ relatedness <- as.matrix(get.adjacency(graph.data.frame(ssel)))
 languages <- unique(c(ssel$language_1, ssel$language_2))
 
 
+
+
+mcps <- fread("../outputs/entry_table_smooth.csv")
+mcps <- subset(mcps, language %in% languages)
+mcp <- select(mcps, iso2_code, language, rca01)
+mcp$rca01 <- as.numeric(mcp$rca01)
+mcp_mat <- EconGeo::get_matrix(mcp)
+
+
+
+
 # Mcp matrix -- relatedness density
 mcps <- fread("../outputs/entry_table_2periods.csv")
 mcps <- subset(mcps, language %in% languages)
