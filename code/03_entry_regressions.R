@@ -10,6 +10,41 @@ library(stargazer)
 library(lmtest)
 library(sandwich)
 
+
+# dataframe from 01_data_prep.ipynb
+df <- fread("../outputs/regression_df01.csv")
+
+df <- subset(df, is.na(pci)==FALSE)
+
+summary(m1 <- lm(entry01 ~ rel_density, data = df))
+summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
+summary(m2 <- lm(entry01 ~ rel_density + pci, data = df))
+summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
+summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
+summary(m2 <- lm(entry01 ~ rel_density + pci, data = df))
+summary(m2_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code), data = df))
+
+
+stargazer(
+  m1,
+  m1_fe,
+  m1_fe2,
+  m2,
+  m2_fe,
+  omit = c("iso2_code", "language"),
+  add.lines=list(
+    c("Country FE", "No", "Yes", "Yes", "No", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No")
+  ),
+  #type="text"
+  out = "../outputs/new_entry_v00.html"
+)
+
+
+
+
+
+
 # software space to relatedness matrix
 ssel <- fread("../outputs/software_space_edgelist2020-2021.csv") %>% select(-drop)
 ssel$proximity <- 1
