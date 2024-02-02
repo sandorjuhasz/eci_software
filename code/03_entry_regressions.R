@@ -12,9 +12,10 @@ library(sandwich)
 
 
 # dataframe from 01_data_prep.ipynb
-df <- fread("../outputs/regression_df01.csv")
+#df <- fread("../outputs/regression_df01_2020_2022.csv")
+#df <- fread("../outputs/data_entry_regression_version1.csv")
+df <- fread("../outputs/data_entry_regression_version2.csv")
 
-df <- subset(df, is.na(pci)==FALSE)
 
 summary(m1 <- lm(entry01 ~ rel_density, data = df))
 summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
@@ -37,8 +38,41 @@ stargazer(
     c("Language FE", "No", "No", "Yes", "No", "No")
   ),
   #type="text"
-  out = "../outputs/new_entry_v00.html"
+  out = "../outputs/new_entry_2022_2023_version2.html"
 )
+
+
+
+m1<-feols(entry01 ~ rel_density | iso2_code,
+          data=df,vcov = 'HC1')
+m2<-feols(entry01 ~ rel_density + pci | iso2_code,
+          data=df,vcov = 'HC1')
+#m3<-feols(entry01 ~ rel_density+neighbor_related | iso2_code,
+#          data=fdf,vcov = 'HC1')
+#m4<-feols(entry01 ~ rel_density+neighbor_related + pci | iso2_code,
+#          data=fdf, vcov = 'HC1')
+#m5<-feols(entry01 ~ rel_density+neighbor_related+rel_density:neighbor_related +pci | iso2_code,
+#          data=fdf,vcov = 'HC1')
+etable(m1,m2)
+
+
+
+
+
+
+library(fixest)
+fdf <- fread("../outputs/relatedness_country_semester_panel_with_collab_neighbors_2p.csv")
+m1<-feols(entry01 ~ rel_density | iso2_code,
+          data=fdf,vcov = 'HC1')
+m2<-feols(entry01 ~ rel_density + pci | iso2_code,
+          data=fdf,vcov = 'HC1')
+#m3<-feols(entry01 ~ rel_density+neighbor_related | iso2_code,
+#          data=fdf,vcov = 'HC1')
+#m4<-feols(entry01 ~ rel_density+neighbor_related + pci | iso2_code,
+#          data=fdf, vcov = 'HC1')
+#m5<-feols(entry01 ~ rel_density+neighbor_related+rel_density:neighbor_related +pci | iso2_code,
+#          data=fdf,vcov = 'HC1')
+etable(m1,m2)
 
 
 
