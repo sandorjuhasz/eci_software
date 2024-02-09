@@ -9,21 +9,33 @@ library(mefa4)
 library(stargazer)
 library(lmtest)
 library(sandwich)
+library(fixest)
 
 
 # dataframe from 01_data_prep.ipynb
 #df <- fread("../outputs/regression_df01_2020_2022.csv")
 #df <- fread("../outputs/data_entry_regression_version1.csv")
-df <- fread("../outputs/data_entry_regression_version2.csv")
+#df <- fread("../outputs/data_entry_regression_version2.csv")
+# df <- fread("../outputs/data_entry_regression_version3_semester_based.csv")
+
+#df <- fread("../outputs/data_entry_regression_version1_log.csv")
+df <- fread("../outputs/data_entry_regression_version2_log.csv")
+#df <- fread("../outputs/data_entry_regression_version3_semester_based_log.csv")
+
+# normalize
+df$rel_density <- scale(df$rel_density)
+df$pci <- scale(df$pci)
 
 
+# models
 summary(m1 <- lm(entry01 ~ rel_density, data = df))
 summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
-summary(m2 <- lm(entry01 ~ rel_density + pci, data = df))
-summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
-summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
+summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(language), data = df))
 summary(m2 <- lm(entry01 ~ rel_density + pci, data = df))
 summary(m2_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code), data = df))
+summary(m3_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
+summary(m3_fe2 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = df))
+
 
 
 stargazer(
@@ -32,13 +44,15 @@ stargazer(
   m1_fe2,
   m2,
   m2_fe,
+  m3_fe2,
   omit = c("iso2_code", "language"),
   add.lines=list(
-    c("Country FE", "No", "Yes", "Yes", "No", "Yes"),
-    c("Language FE", "No", "No", "Yes", "No", "No")
+    c("Country FE", "No", "Yes", "No", "No", "Yes", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No", "Yes")
   ),
   #type="text"
-  out = "../outputs/new_entry_2022_2023_version2.html"
+  #out = "../outputs/new_entry_2022_2023_version3_semester_based.html"
+  out = "../outputs/new_entry_2022_2023_version2_log.html"
 )
 
 
@@ -47,13 +61,25 @@ m1<-feols(entry01 ~ rel_density | iso2_code,
           data=df,vcov = 'HC1')
 m2<-feols(entry01 ~ rel_density + pci | iso2_code,
           data=df,vcov = 'HC1')
+etable(m1,m2)
+
+
+m1<-feols(entry01 ~ rel_density | iso2_code,
+          data=df,
+          cluster = "language")
+m2<-feols(entry01 ~ rel_density + pci | iso2_code,
+          data=df,
+          cluster = "language")
+etable(m1,m2)
+
+
+# cluster='iso2_code'
 #m3<-feols(entry01 ~ rel_density+neighbor_related | iso2_code,
 #          data=fdf,vcov = 'HC1')
 #m4<-feols(entry01 ~ rel_density+neighbor_related + pci | iso2_code,
 #          data=fdf, vcov = 'HC1')
 #m5<-feols(entry01 ~ rel_density+neighbor_related+rel_density:neighbor_related +pci | iso2_code,
 #          data=fdf,vcov = 'HC1')
-etable(m1,m2)
 
 
 
@@ -273,4 +299,15 @@ stargazer(
   add.lines=list(c("Country FE", "No", "NO", "Yes")),
   type="text"
 )
+
+
+
+
+# descriptives -- exploration
+test <- df %>%
+  group_by(iso2_code) %>%
+  summarise(sum_rca01 = sum(rca01)) %>%
+  data.table()
+
+
 
