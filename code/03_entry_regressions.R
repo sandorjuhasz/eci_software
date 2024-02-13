@@ -1,6 +1,7 @@
 ### related diversification -- test
 ### by sandorjuhasz
 
+
 library(EconGeo)
 library(data.table)
 library(dplyr)
@@ -15,11 +16,11 @@ library(fixest)
 # dataframe from 01_data_prep.ipynb
 #df <- fread("../outputs/regression_df01_2020_2022.csv")
 #df <- fread("../outputs/data_entry_regression_version1.csv")
-#df <- fread("../outputs/data_entry_regression_version2.csv")
+df <- fread("../outputs/data_entry_regression_version2.csv")
 # df <- fread("../outputs/data_entry_regression_version3_semester_based.csv")
 
 #df <- fread("../outputs/data_entry_regression_version1_log.csv")
-df <- fread("../outputs/data_entry_regression_version2_log.csv")
+#df <- fread("../outputs/data_entry_regression_version2_log.csv")
 #df <- fread("../outputs/data_entry_regression_version3_semester_based_log.csv")
 
 # normalize
@@ -52,7 +53,7 @@ stargazer(
   ),
   #type="text"
   #out = "../outputs/new_entry_2022_2023_version3_semester_based.html"
-  out = "../outputs/new_entry_2022_2023_version2_log.html"
+  out = "../outputs/new_entry_2022_2023_version2.html"
 )
 
 
