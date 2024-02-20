@@ -14,14 +14,8 @@ library(fixest)
 
 
 # dataframe from 01_data_prep.ipynb
-#df <- fread("../outputs/regression_df01_2020_2022.csv")
-#df <- fread("../outputs/data_entry_regression_version1.csv")
-df <- fread("../outputs/data_entry_regression_version2.csv")
-# df <- fread("../outputs/data_entry_regression_version3_semester_based.csv")
+df <- fread("../outputs/data_entry_regression_version3_2022_2023.csv")
 
-#df <- fread("../outputs/data_entry_regression_version1_log.csv")
-#df <- fread("../outputs/data_entry_regression_version2_log.csv")
-#df <- fread("../outputs/data_entry_regression_version3_semester_based_log.csv")
 
 # normalize
 df$rel_density <- scale(df$rel_density)
@@ -35,7 +29,7 @@ summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(language), data = df))
 summary(m2 <- lm(entry01 ~ rel_density + pci, data = df))
 summary(m2_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code), data = df))
 summary(m3_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
-summary(m3_fe2 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = df))
+#summary(m3_fe2 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = df))
 
 
 
@@ -45,32 +39,36 @@ stargazer(
   m1_fe2,
   m2,
   m2_fe,
-  m3_fe2,
   omit = c("iso2_code", "language"),
   add.lines=list(
-    c("Country FE", "No", "Yes", "No", "No", "Yes", "Yes"),
-    c("Language FE", "No", "No", "Yes", "No", "No", "Yes")
+    c("Country FE", "No", "Yes", "No", "No", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No")
   ),
-  #type="text"
-  #out = "../outputs/new_entry_2022_2023_version3_semester_based.html"
-  out = "../outputs/new_entry_2022_2023_version2.html"
+  out = "../outputs/new_entry_2022_2023_version3.html"
 )
 
 
 
-m1<-feols(entry01 ~ rel_density | iso2_code,
-          data=df,vcov = 'HC1')
-m2<-feols(entry01 ~ rel_density + pci | iso2_code,
-          data=df,vcov = 'HC1')
-etable(m1,m2)
 
 
-m1<-feols(entry01 ~ rel_density | iso2_code,
+
+m1 <- feols(entry01 ~ rel_density | iso2_code,
+          data=df,vcov = 'HC1')
+m2 <- feols(entry01 ~ rel_density + pci | iso2_code,
+          data=df,vcov = 'HC1')
+m3 <- feols(entry01 ~ rel_density | iso2_code + language,
           data=df,
-          cluster = "language")
-m2<-feols(entry01 ~ rel_density + pci | iso2_code,
+          cluster = "iso2_code")
+
+etable(m1, m2, m3)
+
+
+m1 <- feols(entry01 ~ rel_density | iso2_code,
           data=df,
-          cluster = "language")
+          cluster = "iso2_code")
+m2 <- feols(entry01 ~ rel_density + pci | iso2_code,
+          data=df,
+          cluster = "iso2_code")
 etable(m1,m2)
 
 
