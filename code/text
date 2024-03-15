@@ -1,0 +1,54 @@
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Wed, Mar 06, 2024 - 20:24:07
+\begin{table}[!htbp] \centering 
+  \caption{} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{6}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-7} 
+\\[-1.8ex] & \multicolumn{6}{c}{entry01} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4) & (5) & (6)\\ 
+\hline \\[-1.8ex] 
+ rel\_density & 0.048$^{***}$ & 0.035$^{***}$ & 0.042$^{***}$ & 0.051$^{***}$ & 0.037$^{***}$ & 0.034$^{***}$ \\ 
+  & (0.007) & (0.007) & (0.007) & (0.007) & (0.007) & (0.007) \\ 
+  & & & & & & \\ 
+ group\_dummiesgroup &  &  &  &  &  &  \\ 
+  &  &  &  &  &  &  \\ 
+  & & & & & & \\ 
+ group\_dummiesgroupMachine\_Learning\_Embedded\_Systems &  &  &  &  &  & 0.059 \\ 
+  &  &  &  &  &  & (0.038) \\ 
+  & & & & & & \\ 
+ group\_dummiesgroupScripting\_Automation &  &  &  &  &  & 0.307$^{***}$ \\ 
+  &  &  &  &  &  & (0.052) \\ 
+  & & & & & & \\ 
+ group\_dummiesgroupSpecialized\_Research &  &  &  &  &  & 0.152$^{***}$ \\ 
+  &  &  &  &  &  & (0.039) \\ 
+  & & & & & & \\ 
+ group\_dummiesgroupSystems\_Low\_Level\_Programming &  &  &  &  &  & 0.009 \\ 
+  &  &  &  &  &  & (0.030) \\ 
+  & & & & & & \\ 
+ group\_dummiesgroupWeb\_Application\_Development &  &  &  &  &  &  \\ 
+  &  &  &  &  &  &  \\ 
+  & & & & & & \\ 
+ pci &  &  &  & 0.026$^{***}$ & 0.062$^{***}$ & 0.029$^{*}$ \\ 
+  &  &  &  & (0.007) & (0.007) & (0.016) \\ 
+  & & & & & & \\ 
+ Constant & 0.139$^{***}$ & 0.330$^{***}$ & $-$0.027 & 0.140$^{***}$ & 0.320$^{***}$ & 0.319$^{***}$ \\ 
+  & (0.007) & (0.084) & (0.337) & (0.007) & (0.083) & (0.084) \\ 
+  & & & & & & \\ 
+\hline \\[-1.8ex] 
+Country FE & No & Yes & No & No & Yes & Yes \\ 
+Language FE & No & No & Yes & No & No & No \\ 
+Observations & 2,538 & 2,538 & 2,538 & 2,538 & 2,538 & 2,538 \\ 
+R$^{2}$ & 0.019 & 0.156 & 0.107 & 0.025 & 0.181 & 0.206 \\ 
+Adjusted R$^{2}$ & 0.019 & 0.109 & 0.057 & 0.024 & 0.135 & 0.160 \\ 
+Residual Std. Error & 0.343 (df = 2536) & 0.327 (df = 2405) & 0.337 (df = 2402) & 0.342 (df = 2535) & 0.322 (df = 2404) & 0.317 (df = 2400) \\ 
+F Statistic & 48.832$^{***}$ (df = 1; 2536) & 3.358$^{***}$ (df = 132; 2405) & 2.134$^{***}$ (df = 135; 2402) & 31.964$^{***}$ (df = 2; 2535) & 3.983$^{***}$ (df = 133; 2404) & 4.539$^{***}$ (df = 137; 2400) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{6}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
