@@ -26,7 +26,7 @@ df$group <- factor(df$group, levels = c("Systems_Low_Level_Programming", "Machin
 summary(m1 <- lm(entry01 ~ as.factor(iso2_code) + as.factor(group), data = df))
 summary(m2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(group), data = df))
 summary(m3 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(group), data = df))
-summary(m4 <- lm(entry01 ~ rel_density + I(rel_density^2) + pci + as.factor(iso2_code) + as.factor(group), data = df))
+summary(m4 <- lm(entry01 ~ rel_density + pci + I(rel_density^2) + as.factor(iso2_code) + as.factor(group), data = df))
 
 levels(df$group)
 
