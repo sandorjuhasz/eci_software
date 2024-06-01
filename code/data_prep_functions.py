@@ -1,3 +1,5 @@
+### general data preparation
+
 def drop_specifics_from_list(data, filter_list):
     """filter specific languages from list -- motivated by RM del Rio-Chanona et al 2023"""
     data = data[~data["language"].str.contains(filter_list, case=False, regex=True)]
@@ -30,3 +32,57 @@ def add_period_ids(data, period):
         quarter_to_period = dict(zip(data["quarter_id"].unique(), list(range(1, len(data["quarter_id"].unique()) + 1))))
         data["period"] = data["quarter_id"].map(quarter_to_period)
     return data
+
+
+
+### relatedness data preparation
+def edgelist_cleaning_for_software_space(data, key_columns):
+    """get software space network from raw proximity values"""
+    data = data[key_columns]
+
+    # drop zero -- non-existing edges
+    data = data[data[key_columns[2]] > 0]
+
+    # drop self loops AND keep unique edges ONLY
+    data = data[data[key_columns[0]] < data[key_columns[1]]]
+    return data
+
+def maximum_spanning_tree(data, key_columns):
+    """get the maximum spanning tree of the full relatedness based network"""
+    table = data.copy()
+    table["distance"] = 1.0 / table[key_columns[2]]
+    G = nx.from_pandas_edgelist(table, source = key_columns[0], target = key_columns[1], edge_attr = ["distance", key_columns[2]])
+    T = nx.minimum_spanning_tree(G, weight = "distance")
+    table2 = nx.to_pandas_edgelist(T)
+    table2 = table2[table2[key_columns[2]] > 0]
+    table2.rename(columns = {"source": key_columns[0], "target": key_columns[1], key_columns[2]: "score"}, inplace = True)
+    table = pd.merge(
+        table,
+        table2,
+        on=key_columns[0:2]
+    )  
+    table["edge"] = table.apply(lambda x: "%s-%s" % (min(x[key_columns[0]], x[key_columns[1]]), max(x[key_columns[0]], x[key_columns[1]])), axis = 1)
+    table = table.drop_duplicates(subset = ["edge"])
+    table = table.drop(columns=["edge"])
+    return table[key_columns]
+
+def add_edges(mst_edges, all_edges, nr_edges_to_add):
+    """add edges to the maximum spanning tree to have a 1/3 nodes/edges ratio"""
+    # drop mst edges from the full edgelist
+    mst_edges["drop"] = 1
+    all_edges = pd.merge(
+        all_edges,
+        mst_edges,
+        on = ["language_1", "language_2", "proximity"],
+        how="left"
+    )
+    all_edges = all_edges[all_edges["drop"] != 1].drop(columns="drop")
+
+    # sort and select
+    all_edges = all_edges.sort_values(by="proximity", ascending=False).iloc[:nr_edges_to_add]
+
+    # add to mst edgelist
+    software_space_el = pd.concat([mst_edges, all_edges])
+    software_space_el.drop(columns=["drop"], inplace=True)
+    return software_space_el
+
