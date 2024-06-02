@@ -13,7 +13,6 @@ library(fixest)
 # dataframe from 01_data_prep.ipynb
 df <- fread("../outputs/data_entry_regressions_0011.csv")
 
-
 # normalize
 df$rel_density <- scale(df$rel_density)
 df$pci <- scale(df$pci)
@@ -47,7 +46,7 @@ stargazer(
     c("Country FE", "No", "Yes", "No", "No", "No", "Yes"),
     c("Language FE", "No", "No", "Yes", "No", "No", "No")
   ),
-  out = "../outputs/table5_entry_regressions.html"
+  out = "../outputs/table5_entry_regressions_threshold05.html"
 )
 
 
