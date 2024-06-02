@@ -63,6 +63,30 @@ def add_period_ids(data, period):
     return data
 
 
+def bundle_data(data, periods):
+    """aggreagte data for period by taking the mean number active developers"""
+    data = (
+        data[data["period"].isin(periods)]
+        .groupby(["iso2_code", "language"])["num_pushers"]
+        .agg("mean")
+        .reset_index()
+    )
+    data["period"] = 1
+    data["num_pushers"] = data["num_pushers"].astype(int)
+    return data
+
+
+def rca_calculation(table, c_column, p_column, value_column, threshold):
+    """calculate RCA from an M_cp dataframe"""
+    table["e_p"] = table.groupby(p_column)[value_column].transform("sum")
+    table["e_c"] = table.groupby(c_column)[value_column].transform("sum")
+    table["e"] = table[value_column].sum()
+
+    table["rca"] = (table[value_column] / table["e_p"]) / (table["e_c"] / table["e"])
+    table["rca01"] = np.where(table["rca"] >= threshold, 1, 0)
+    return table
+
+
 ### relatedness data preparation
 def edgelist_cleaning_for_software_space(data, key_columns):
     """get software space network from raw proximity values"""
