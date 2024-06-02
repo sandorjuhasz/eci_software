@@ -11,21 +11,22 @@ library(fixest)
 
 
 # dataframe from 01_data_prep.ipynb
-df <- fread("../outputs/data_entry_regressions_2020_2021_based.csv")
+df <- fread("../outputs/data_entry_regressions_0011.csv")
 
 
 # normalize
 df$rel_density <- scale(df$rel_density)
 df$pci <- scale(df$pci)
+df$ubiquity <- scale(df$ubiquity)
 
 
 # model versions 1 -- linear probability
 summary(m1 <- lm(entry01 ~ rel_density, data = df))
 summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
 summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(language), data = df))
-summary(m2 <- lm(entry01 ~ pci, data = df))
-summary(m3 <- lm(entry01 ~ rel_density + pci, data = df))
-summary(m3_fe <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code), data = df))
+summary(m2 <- lm(entry01 ~ ubiquity, data = df))
+summary(m3 <- lm(entry01 ~ rel_density + ubiquity, data = df))
+summary(m3_fe <- lm(entry01 ~ rel_density + ubiquity + as.factor(iso2_code), data = df))
 #summary(m3_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
 #summary(m5_fe2 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = df))
 
@@ -39,14 +40,14 @@ stargazer(
   m3_fe,
   omit.stat=c("f", "ser"),
   dep.var.caption = "",
-  dep.var.labels = c("Entry (2022-2023)"),
-  covariate.labels = c("Relatedness density", "Language complexity"),
+  dep.var.labels = c("Entry"),
+  covariate.labels = c("Relatedness density", "Language ubiquity"),
   omit = c("iso2_code", "language"),
   add.lines=list(
     c("Country FE", "No", "Yes", "No", "No", "No", "Yes"),
     c("Language FE", "No", "No", "Yes", "No", "No", "No")
   ),
-  out = "../outputs/table3_entry_regressions.html"
+  out = "../outputs/table5_entry_regressions.html"
 )
 
 
