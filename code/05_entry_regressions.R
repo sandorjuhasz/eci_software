@@ -26,8 +26,7 @@ summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(language), data = df))
 summary(m2 <- lm(entry01 ~ ubiquity, data = df))
 summary(m3 <- lm(entry01 ~ rel_density + ubiquity, data = df))
 summary(m3_fe <- lm(entry01 ~ rel_density + ubiquity + as.factor(iso2_code), data = df))
-#summary(m3_fe2 <- lm(entry01 ~ rel_density + as.factor(iso2_code) + as.factor(language), data = df))
-#summary(m5_fe2 <- lm(entry01 ~ rel_density + pci + as.factor(iso2_code) + as.factor(language), data = df))
+summary(m3_fe2 <- lm(entry01 ~ rel_density + ubiquity + as.factor(iso2_code) + as.factor(language), data = df))
 
 
 stargazer(
@@ -37,16 +36,17 @@ stargazer(
   m2,
   m3,
   m3_fe,
+  m3_fe2,
   omit.stat=c("f", "ser"),
   dep.var.caption = "",
   dep.var.labels = c("Entry"),
   covariate.labels = c("Relatedness density", "Language ubiquity"),
   omit = c("iso2_code", "language"),
   add.lines=list(
-    c("Country FE", "No", "Yes", "No", "No", "No", "Yes"),
-    c("Language FE", "No", "No", "Yes", "No", "No", "No")
+    c("Country FE", "No", "Yes", "No", "No", "No", "Yes", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No", "No", "Yes")
   ),
-  out = "../outputs/table5_entry_regressions_threshold05.html"
+  out = "../outputs/table5_entry_regressions_0011.html"
 )
 
 
@@ -56,11 +56,25 @@ stargazer(
 fxm1 <- feols(entry01 ~ rel_density, data = df)
 fxm1_fe <- feols(entry01 ~ rel_density | iso2_code, data = df)
 fxm1_fe2 <- feols(entry01 ~ rel_density | language, data = df)
-fxm2 <- feols(entry01 ~ pci, data = df)
-fxm3 <- feols(entry01 ~ rel_density + pci, data = df)
-fxm3_fe <- feols(entry01 ~ rel_density + pci | iso2_code, data = df)
+fxm2 <- feols(entry01 ~ ubiquity, data = df)
+fxm3 <- feols(entry01 ~ rel_density + ubiquity, data = df)
+fxm3_fe <- feols(entry01 ~ rel_density + ubiquity | iso2_code, data = df)
+fxm3_fe2 <- feols(entry01 ~ rel_density + ubiquity | iso2_code + language, data = df)
 
-etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe)
+etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
+
+
+fxm1 <- feols(entry01 ~ rel_density, data = df, vcov = "HC1")
+fxm1_fe <- feols(entry01 ~ rel_density | iso2_code, data = df, vcov = "HC1")
+fxm1_fe2 <- feols(entry01 ~ rel_density | language, data = df, vcov = "HC1")
+fxm2 <- feols(entry01 ~ ubiquity, data = df, vcov = "HC1")
+fxm3 <- feols(entry01 ~ rel_density + ubiquity, data = df, vcov = "HC1")
+fxm3_fe <- feols(entry01 ~ rel_density + ubiquity | iso2_code, data = df, vcov = "HC1")
+fxm3_fe2 <- feols(entry01 ~ rel_density + ubiquity | iso2_code + language, data = df, vcov = "HC1")
+
+etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
 
 
 fxm1 <- feols(entry01 ~ rel_density, data = df, vcov = "HC1")
