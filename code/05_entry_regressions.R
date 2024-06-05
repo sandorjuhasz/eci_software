@@ -12,6 +12,7 @@ library(fixest)
 
 # dataframe from 01_data_prep.ipynb
 df <- fread("../outputs/data_entry_regressions_0011.csv")
+# df <- fread("../outputs/data_exit_regressions_1100.csv")
 
 # normalize
 df$rel_density <- scale(df$rel_density)
@@ -74,6 +75,82 @@ fxm3_fe <- feols(entry01 ~ rel_density + ubiquity | iso2_code, data = df, vcov =
 fxm3_fe2 <- feols(entry01 ~ rel_density + ubiquity | iso2_code + language, data = df, vcov = "HC1")
 
 etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
+
+
+
+fxm1 <- feols(entry01 ~ rel_density, data = df, cluster = "iso2_code")
+fxm1_fe <- feols(entry01 ~ rel_density | iso2_code, data = df, cluster = "iso2_code")
+fxm1_fe2 <- feols(entry01 ~ rel_density | language, data = df, cluster = "iso2_code")
+fxm2 <- feols(entry01 ~ ubiquity, data = df, cluster = "iso2_code")
+fxm3 <- feols(entry01 ~ rel_density + ubiquity, data = df, cluster = "iso2_code")
+fxm3_fe <- feols(entry01 ~ rel_density + ubiquity | iso2_code, data = df, cluster = "iso2_code")
+fxm3_fe2 <- feols(entry01 ~ rel_density + ubiquity | iso2_code + language, data = df, cluster = "iso2_code")
+
+etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
+
+
+
+fxm1 <- feols(entry01 ~ rel_density, data = df, cluster = "language")
+fxm1_fe <- feols(entry01 ~ rel_density | iso2_code, data = df, cluster = "language")
+fxm1_fe2 <- feols(entry01 ~ rel_density | language, data = df, cluster = "language")
+fxm2 <- feols(entry01 ~ ubiquity, data = df, cluster = "language")
+fxm3 <- feols(entry01 ~ rel_density + ubiquity, data = df, cluster = "language")
+fxm3_fe <- feols(entry01 ~ rel_density + ubiquity | iso2_code, data = df, cluster = "language")
+fxm3_fe2 <- feols(entry01 ~ rel_density + ubiquity | iso2_code + language, data = df, cluster = "language")
+
+etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
+
+
+
+
+# model versions 1 -- linear probability
+summary(m1 <- lm(exit01 ~ rel_density, data = df))
+summary(m1_fe <- lm(exit01 ~ rel_density + as.factor(iso2_code), data = df))
+summary(m1_fe2 <- lm(exit01 ~ rel_density + as.factor(language), data = df))
+summary(m2 <- lm(exit01 ~ ubiquity, data = df))
+summary(m3 <- lm(exit01 ~ rel_density + ubiquity, data = df))
+summary(m3_fe <- lm(exit01 ~ rel_density + ubiquity + as.factor(iso2_code), data = df))
+summary(m3_fe2 <- lm(exit01 ~ rel_density + ubiquity + as.factor(iso2_code) + as.factor(language), data = df))
+
+
+stargazer(
+  m1,
+  m1_fe,
+  m1_fe2,
+  m2,
+  m3,
+  m3_fe,
+  m3_fe2,
+  omit.stat=c("f", "ser"),
+  dep.var.caption = "",
+  dep.var.labels = c("Exit"),
+  covariate.labels = c("Relatedness density", "Language ubiquity"),
+  omit = c("iso2_code", "language"),
+  add.lines=list(
+    c("Country FE", "No", "Yes", "No", "No", "No", "Yes", "Yes"),
+    c("Language FE", "No", "No", "Yes", "No", "No", "No", "Yes")
+  ),
+  out = "../outputs/table5_exit_regressions_1100.html"
+)
+
+
+fxm1 <- feols(exit01 ~ rel_density, data = df)
+fxm2 <- feols(exit01 ~ ubiquity, data = df)
+fxm3 <- feols(exit01 ~ rel_density + ubiquity, data = df)
+
+etable(fxm1, fxm1_fe, fxm1_fe2, fxm2, fxm3, fxm3_fe, fxm3_fe2)
+
+
+
+
+
+
+
+
+
 
 
 
