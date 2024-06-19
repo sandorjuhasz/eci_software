@@ -41,6 +41,26 @@ etable(
 )
 
 
+### ENTRY -- SI
+logit_ent_m1 <- feglm(entry01 ~ rel_density, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m2 <- feglm(entry01 ~ rel_density | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m3 <- feglm(entry01 ~ rel_density | language, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m4 <- feglm(entry01 ~ rel_density | iso2_code + language, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m5 <- feglm(entry01 ~ ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m6 <- feglm(entry01 ~ rel_density + ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m7 <- feglm(entry01 ~ rel_density + ubiquity | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+
+etable(
+  logit_ent_m1, logit_ent_m2, logit_ent_m3, logit_ent_m4, logit_ent_m5, logit_ent_m6, logit_ent_m7,
+  #fitstat = ~ r2,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
 
 ### EXIT
 ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
@@ -68,6 +88,24 @@ etable(
   #tex = TRUE
 )
 
+
+### EXIT -- SI
+logit_ex_m1 <- feglm(exit01 ~ rel_density, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m2 <- feglm(exit01 ~ rel_density | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m3 <- feglm(exit01 ~ rel_density | language, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m4 <- feglm(exit01 ~ rel_density | iso2_code + language, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m5 <- feglm(exit01 ~ ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m6 <- feglm(exit01 ~ rel_density + ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m7 <- feglm(exit01 ~ rel_density + ubiquity | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+
+etable(
+  logit_ex_m1, logit_ex_m2, logit_ex_m3, logit_ex_m4, logit_ex_m5, logit_ex_m6, logit_ex_m7,
+  #fitstat = ~ r2,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
 
 
 
