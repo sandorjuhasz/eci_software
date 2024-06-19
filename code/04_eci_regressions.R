@@ -46,7 +46,6 @@ gdp_m08 <- feols(log_gpd_pc ~ software_eci_norm + trade_eci_norm + tech_eci_norm
 
 etable(
   gdp_m01, gdp_m02, gdp_m03, gdp_m04, gdp_m05, gdp_m06, gdp_m07, gdp_m08,
-  #fitstat = c("r2", "ar2"),
   #digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
@@ -74,7 +73,6 @@ gini_m08 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + tra
 
 etable(
   gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08,
-  #fitstat = c("r2", "ar2"),
   #digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
@@ -102,7 +100,6 @@ em_m08 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + trade_eci_norm 
 
 etable(
   em_m01, em_m02, em_m03, em_m04, em_m05, em_m06, em_m07, em_m08,
-  #fitstat = c("r2", "ar2"),
   #digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)

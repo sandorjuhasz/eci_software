@@ -8,19 +8,72 @@ library(stargazer)
 library(lmtest)
 library(sandwich)
 library(fixest)
-
+library(htmlTable)
 
 # dataframe from 01_data_prep.ipynb
-df <- fread("../outputs/data_entry_regressions_0011.csv")
-# df <- fread("../outputs/data_exit_regressions_1100.csv")
+
+
+### ENTRY 
+en_df <- fread("../outputs/data_entry_regressions_0011.csv")
+
 
 # normalize
-df$rel_density <- scale(df$rel_density)
-df$pci <- scale(df$pci)
-df$ubiquity <- scale(df$ubiquity)
+en_df$rel_density <- scale(en_df$rel_density)
+en_df$pci <- scale(en_df$pci)
+en_df$ubiquity <- scale(en_df$ubiquity)
 
 
-# model versions 1 -- linear probability
+ent_m1 <- feols(entry01 ~ rel_density, cluster = "iso2_code", data = en_df)
+ent_m2 <- feols(entry01 ~ rel_density | iso2_code, cluster = "iso2_code", data = en_df)
+ent_m3 <- feols(entry01 ~ rel_density | language, cluster = "iso2_code", data = en_df)
+ent_m4 <- feols(entry01 ~ rel_density | iso2_code + language, cluster = "iso2_code", data = en_df)
+ent_m5 <- feols(entry01 ~ ubiquity, cluster = "iso2_code", data = en_df)
+ent_m6 <- feols(entry01 ~ rel_density + ubiquity, cluster = "iso2_code", data = en_df)
+ent_m7 <- feols(entry01 ~ rel_density + ubiquity | iso2_code, cluster = "iso2_code", data = en_df)
+
+etable(
+  ent_m1, ent_m2, ent_m3, ent_m4, ent_m5, ent_m6, ent_m7,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
+### EXIT
+ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
+
+
+# normalize
+ex_df$rel_density <- scale(ex_df$rel_density)
+ex_df$pci <- scale(ex_df$pci)
+ex_df$ubiquity <- scale(ex_df$ubiquity)
+
+
+ex_m1 <- feols(exit01 ~ rel_density, cluster = "iso2_code", data = ex_df)
+ex_m2 <- feols(exit01 ~ rel_density | iso2_code, cluster = "iso2_code", data = ex_df)
+ex_m3 <- feols(exit01 ~ rel_density | language, cluster = "iso2_code", data = ex_df)
+ex_m4 <- feols(exit01 ~ rel_density | iso2_code + language, cluster = "iso2_code", data = ex_df)
+ex_m5 <- feols(exit01 ~ ubiquity, cluster = "iso2_code", data = ex_df)
+ex_m6 <- feols(exit01 ~ rel_density + ubiquity, cluster = "iso2_code", data = ex_df)
+ex_m7 <- feols(exit01 ~ rel_density + ubiquity | iso2_code, cluster = "iso2_code", data = ex_df)
+
+etable(
+  ex_m1, ex_m2, ex_m3, ex_m4, ex_m5, ex_m6, ex_m7,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
+
+
+
+
+### stargazer version for quick reproduction
 summary(m1 <- lm(entry01 ~ rel_density, data = df))
 summary(m1_fe <- lm(entry01 ~ rel_density + as.factor(iso2_code), data = df))
 summary(m1_fe2 <- lm(entry01 ~ rel_density + as.factor(language), data = df))
