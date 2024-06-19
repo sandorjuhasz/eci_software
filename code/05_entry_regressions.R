@@ -33,6 +33,7 @@ ent_m7 <- feols(entry01 ~ rel_density + ubiquity | iso2_code, cluster = "iso2_co
 
 etable(
   ent_m1, ent_m2, ent_m3, ent_m4, ent_m5, ent_m6, ent_m7,
+  #fitstat = ~ r2,
   #digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
