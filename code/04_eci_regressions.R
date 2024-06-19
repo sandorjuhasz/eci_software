@@ -16,6 +16,7 @@ df <- fread("../outputs/eci_comparisons_2020.csv")
 
 # manipulation
 df$log_gpd_pc <- log10(df$gdpcap_o)
+df$log_gpd_pc2 <- df$log_gpd_pc ** 2
 df$gini_norm <- scale(df$gini_mean)
 #df$emission_norm <- scale(df$embodied_emissions)
 df$emission_norm <- scale(df$emissions)
@@ -32,30 +33,24 @@ df$log_nat_res <- log10(df$nat_res)
 key_columns <- c("log_gpd_pc", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res")
 reg_df <- df[complete.cases(df[, ..key_columns]), ]
 
-# models
-summary(m1 <- lm(log_gpd_pc ~ software_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m2 <- lm(log_gpd_pc ~ trade_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m3 <- lm(log_gpd_pc ~ tech_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m4 <- lm(log_gpd_pc ~ research_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m5a <- lm(log_gpd_pc ~ software_eci_norm + trade_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m5b <- lm(log_gpd_pc ~ software_eci_norm + tech_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m5c <- lm(log_gpd_pc ~ software_eci_norm + research_eci_norm + log_pop + log_nat_res, data = reg_df))
-summary(m6 <- lm(log_gpd_pc ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, data = reg_df))
 
-stargazer(
-  m1,
-  m2,
-  m3,
-  m4,
-  m5a,
-  m5b,
-  m5c,
-  m6,
-  omit.stat=c("f", "ser"),
-  dep.var.caption = "",
-  dep.var.labels = c("GPD per capita 2020 (log)"),
-  covariate.labels = c("ECI software", "ECI trade", "ECI technology", "ECI research", "Population (log)", "Natural resources (log)"),
-  out = "../outputs/table1_gdp_eci_regressions.html"
+gdp_m01 <- feols(log_gpd_pc ~ software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m02 <- feols(log_gpd_pc ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m03 <- feols(log_gpd_pc ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m04 <- feols(log_gpd_pc ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m05 <- feols(log_gpd_pc ~ software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m06 <- feols(log_gpd_pc ~ software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m07 <- feols(log_gpd_pc ~ software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gpd_pc ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gdp_m01, gdp_m02, gdp_m03, gdp_m04, gdp_m05, gdp_m06, gdp_m07, gdp_m08,
+  #fitstat = c("r2", "ar2"),
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
 )
 
 
@@ -66,36 +61,58 @@ stargazer(
 key_columns <- c("gini_norm", "log_gpd_pc", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res")
 reg_df <- df[complete.cases(df[, ..key_columns]), ]
 
-# models
-summary(m1 <- lm(gini_norm ~ software_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m2 <- lm(gini_norm ~ trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m3 <- lm(gini_norm ~ tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m4 <- lm(gini_norm ~ research_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m5a <- lm(gini_norm ~ software_eci_norm + trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m5b <- lm(gini_norm ~ software_eci_norm + tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m5c <- lm(gini_norm ~ software_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
-summary(m6 <- lm(gini_norm ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df))
 
-stargazer(
-  m1,
-  m2,
-  m3,
-  m4,
-  m5a,
-  m5b,
-  m5c,
-  m6,
-  omit.stat=c("f", "ser"),
-  dep.var.caption = "",
-  dep.var.labels = c("Gini"),
-  covariate.labels = c("ECI software", "ECI trade", "ECI technology", "ECI research", "GPD per capita (log)", "Population (log)", "Natural resources (log)"),
-  out = "../outputs/table2_gini_eci_regressions.html"
+gini_m01 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m02 <- feols(gini_norm ~ trade_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m03 <- feols(gini_norm ~ tech_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m04 <- feols(gini_norm ~ research_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m05 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m06 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m07 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08,
+  #fitstat = c("r2", "ar2"),
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
 )
 
 
 
 
 ### emissions vs ECI
+# drop rows w/ NAs in key columns
+key_columns <- c("emission_norm", "log_gpd_pc", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res")
+reg_df <- df[complete.cases(df[, ..key_columns]), ]
+
+
+em_m01 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m02 <- feols(emission_norm ~ trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m03 <- feols(emission_norm ~ tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m04 <- feols(emission_norm ~ research_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m05 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m06 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m07 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(emission_norm ~ software_eci_norm + log_gpd_pc + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  em_m01, em_m02, em_m03, em_m04, em_m05, em_m06, em_m07, em_m08,
+  #fitstat = c("r2", "ar2"),
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
+
+### emissions vs ECI -- example left here for stargazer output
 # drop rows w/ NAs in key columns
 key_columns <- c("emission_norm", "log_gpd_pc", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res")
 reg_df <- df[complete.cases(df[, ..key_columns]), ]
