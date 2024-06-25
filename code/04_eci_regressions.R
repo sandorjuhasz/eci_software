@@ -140,3 +140,66 @@ stargazer(
   out = "../outputs/table3_emission_eci_regressions.html"
 )
 
+
+
+
+
+
+### IV approach for SI
+
+# dataframe from 01_data_prep.ipynb
+df <- fread("../outputs/eci_comparisons_2020.csv")
+df_iv <- fread("../outputs/eci_software_2020_2023_iv_v2.csv") %>%
+  select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  filter(year == 2020)
+df <- merge(
+  df,
+  df_iv,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+# manipulation
+df$log_gpd_pc <- log10(df$gdpcap_o)
+df$log_gpd_pc2 <- df$log_gpd_pc ** 2
+df$gini_norm <- scale(df$gini_mean)
+#df$emission_norm <- scale(df$embodied_emissions)
+df$emission_norm <- scale(df$emissions)
+df$software_eci_norm <- scale(df$software_eci_2020)
+df$trade_eci_norm <- scale(df$trade_eci_2020)
+df$tech_eci_norm <- scale(df$tech_eci_2020)
+df$research_eci_norm <- scale(df$research_eci_2020)
+df$log_pop <- log10(df$pop_o)
+df$log_nat_res <- log10(df$nat_res)
+df$sim_software_eci_norm <- scale(df$avg_eci_similar_spec)
+
+
+### GPD vs ECI
+# drop rows w/ NAs in key columns
+key_columns <- c("log_gpd_pc", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res", "sim_software_eci_norm")
+reg_df <- df[complete.cases(df[, ..key_columns]), ]
+
+
+gdp_ivm01 <- feols(log_gpd_pc ~ 1 | software_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm02 <- feols(log_gpd_pc ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm03 <- feols(log_gpd_pc ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm04 <- feols(log_gpd_pc ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm05 <- feols(log_gpd_pc ~ 1 | software_eci_norm + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm06 <- feols(log_gpd_pc ~ 1 | software_eci_norm + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm07 <- feols(log_gpd_pc ~ 1 | software_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm08 <- feols(log_gpd_pc ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gdp_ivm01, gdp_ivm02, gdp_ivm03, gdp_ivm04, gdp_ivm05, gdp_ivm06, gdp_ivm07, gdp_ivm08,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
