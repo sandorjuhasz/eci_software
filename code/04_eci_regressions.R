@@ -202,4 +202,54 @@ etable(
 )
 
 
+### Gini vs ECI
+# drop rows w/ NAs in key columns
+key_columns <- c("gini_norm", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res", "sim_software_eci_norm")
+reg_df <- df[complete.cases(df[, ..key_columns]), ]
+
+
+
+gini_ivm01 <- feols(gini_norm ~ 1 | software_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm02 <- feols(gini_norm ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm03 <- feols(gini_norm ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm04 <- feols(gini_norm ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm05 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm06 <- feols(gini_norm ~ 1 | software_eci_norm + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm07 <- feols(gini_norm ~ 1 | software_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm08 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gini_ivm01, gini_ivm02, gini_ivm03, gini_ivm04, gini_ivm05, gini_ivm06, gini_ivm07, gini_ivm08,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
+
+
+### emissions vs ECI
+# drop rows w/ NAs in key columns
+key_columns <- c("emission_norm", "software_eci_norm", "trade_eci_norm", "tech_eci_norm", "research_eci_norm", "log_pop", "log_nat_res", "sim_software_eci_norm")
+reg_df <- df[complete.cases(df[, ..key_columns]), ]
+
+
+em_ivm01 <- feols(gini_norm ~ 1 | software_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm02 <- feols(gini_norm ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm03 <- feols(gini_norm ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm04 <- feols(gini_norm ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm05 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm06 <- feols(gini_norm ~ 1 | software_eci_norm + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm07 <- feols(gini_norm ~ 1 | software_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm08 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  em_ivm01, em_ivm02, em_ivm03, em_ivm04, em_ivm05, em_ivm06, em_ivm07, em_ivm08,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
 
