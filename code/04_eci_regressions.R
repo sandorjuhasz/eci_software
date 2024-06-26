@@ -208,15 +208,15 @@ key_columns <- c("gini_norm", "software_eci_norm", "trade_eci_norm", "tech_eci_n
 reg_df <- df[complete.cases(df[, ..key_columns]), ]
 
 
+gini_ivm01 <- feols(gini_norm ~ 1 | software_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm02 <- feols(gini_norm ~ trade_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm03 <- feols(gini_norm ~ tech_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm04 <- feols(gini_norm ~ research_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm05 <- feols(gini_norm ~ 1 | software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm06 <- feols(gini_norm ~ 1 | software_eci_norm + log_gpd_pc + log_gpd_pc2 + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm07 <- feols(gini_norm ~ 1 | software_eci_norm + log_gpd_pc + log_gpd_pc2 + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm08 <- feols(gini_norm ~ 1 | software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
-gini_ivm01 <- feols(gini_norm ~ 1 | software_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm02 <- feols(gini_norm ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm03 <- feols(gini_norm ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm04 <- feols(gini_norm ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm05 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm06 <- feols(gini_norm ~ 1 | software_eci_norm + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm07 <- feols(gini_norm ~ 1 | software_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm08 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
@@ -235,14 +235,14 @@ key_columns <- c("emission_norm", "software_eci_norm", "trade_eci_norm", "tech_e
 reg_df <- df[complete.cases(df[, ..key_columns]), ]
 
 
-em_ivm01 <- feols(gini_norm ~ 1 | software_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm02 <- feols(gini_norm ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm03 <- feols(gini_norm ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm04 <- feols(gini_norm ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm05 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm06 <- feols(gini_norm ~ 1 | software_eci_norm + tech_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm07 <- feols(gini_norm ~ 1 | software_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm08 <- feols(gini_norm ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm01 <- feols(emission_norm ~ 1 | software_eci_norm + log_gpd_pc + log_pop + log_nat_res ~ sim_software_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm02 <- feols(emission_norm ~ trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm03 <- feols(emission_norm ~ tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm04 <- feols(emission_norm ~ research_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm05 <- feols(emission_norm ~ 1 | software_eci_norm + trade_eci_norm + log_gpd_pc + log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm06 <- feols(emission_norm ~ 1 | software_eci_norm + tech_eci_norm + log_gpd_pc + log_pop + log_nat_res ~ sim_software_eci_norm + tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm07 <- feols(emission_norm ~ 1 | software_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res ~ sim_software_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm08 <- feols(emission_norm ~ 1 | software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_gpd_pc +log_pop + log_nat_res ~ sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
