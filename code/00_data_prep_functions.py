@@ -2,6 +2,42 @@
 import pandas as pd
 import numpy as np
 import networkx as nx
+import os
+import requests
+
+
+### download necessary data from GitHub Innovation Graph
+data_dir = "../data"
+file_languages = "languages.csv"
+file_developers = "developers.csv"
+url_languages = (
+    f"https://github.com/github/innovationgraph/blob/main/data/{file_languages}"
+)
+url_developers = (
+    f"https://github.com/github/innovationgraph/blob/main/data/{file_developers}"
+)
+
+
+def download_file(url, path):
+    response = requests.get(url)
+    response.raise_for_status()
+    with open(path, "wb") as f:
+        f.write(response.content)
+
+
+def download_github_data(files, data_dir):
+    if not os.path.exists("../data"):
+        os.makedirs("../data")
+
+    for i in files:
+        if not os.path.exists(i):
+            print(f"{i} not found, downloading...")
+            download_file(
+                f"https://github.com/github/innovationgraph/blob/main/data/{i}",
+                f"../data/{i}",
+            )
+        else:
+            print(f"{i} already exists")
 
 
 ### general data preparation
