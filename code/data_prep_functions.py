@@ -6,18 +6,6 @@ import os
 import requests
 
 
-### download necessary data from GitHub Innovation Graph
-data_dir = "../data"
-file_languages = "languages.csv"
-file_developers = "developers.csv"
-url_languages = (
-    f"https://github.com/github/innovationgraph/blob/main/data/{file_languages}"
-)
-url_developers = (
-    f"https://github.com/github/innovationgraph/blob/main/data/{file_developers}"
-)
-
-
 def download_file(url, path):
     response = requests.get(url)
     response.raise_for_status()
@@ -25,15 +13,16 @@ def download_file(url, path):
         f.write(response.content)
 
 
-def download_github_data(files, data_dir):
+def download_github_data(files):
+    print("Downloading data from GitHub Innovation Graph")
     if not os.path.exists("../data"):
         os.makedirs("../data")
 
     for i in files:
-        if not os.path.exists(i):
+        if not os.path.exists(f"../data/{i}"):
             print(f"{i} not found, downloading...")
             download_file(
-                f"https://github.com/github/innovationgraph/blob/main/data/{i}",
+                f"https://raw.githubusercontent.com/github/innovationgraph/main/data/{i}",
                 f"../data/{i}",
             )
         else:
@@ -41,6 +30,12 @@ def download_github_data(files, data_dir):
 
 
 ### general data preparation
+def period_filter(data, years_to_consider):
+    """focus on 2020-2023 period only"""
+    data = data[data["year"].isin(years_to_consider)]
+    return data
+
+
 def drop_specifics_from_list(data, filter_list):
     """filter specific languages from list -- motivated by RM del Rio-Chanona et al 2023"""
     data = data[~data["language"].str.contains(filter_list, case=False, regex=True)]
