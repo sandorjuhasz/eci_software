@@ -2,9 +2,40 @@
 import pandas as pd
 import numpy as np
 import networkx as nx
+import os
+import requests
+
+
+def download_file(url, path):
+    response = requests.get(url)
+    response.raise_for_status()
+    with open(path, "wb") as f:
+        f.write(response.content)
+
+
+def download_github_data(files):
+    print("Downloading data from GitHub Innovation Graph")
+    if not os.path.exists("../data"):
+        os.makedirs("../data")
+
+    for i in files:
+        if not os.path.exists(f"../data/{i}"):
+            print(f"{i} not found, downloading...")
+            download_file(
+                f"https://raw.githubusercontent.com/github/innovationgraph/main/data/{i}",
+                f"../data/{i}",
+            )
+        else:
+            print(f"{i} already exists")
 
 
 ### general data preparation
+def period_filter(data, years_to_consider):
+    """focus on 2020-2023 period only"""
+    data = data[data["year"].isin(years_to_consider)]
+    return data
+
+
 def drop_specifics_from_list(data, filter_list):
     """filter specific languages from list -- motivated by RM del Rio-Chanona et al 2023"""
     data = data[~data["language"].str.contains(filter_list, case=False, regex=True)]
