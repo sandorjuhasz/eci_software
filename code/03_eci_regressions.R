@@ -149,7 +149,7 @@ stargazer(
 
 # dataframe from 01_data_prep.ipynb
 df <- fread("../outputs/eci_comparisons_2020.csv")
-df_iv <- fread("../outputs/eci_software_2020_2023_iv_v2.csv") %>%
+df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
   select(iso2_code, year, avg_eci_similar_spec) %>%
   unique() %>%
   filter(year == 2020)
@@ -252,4 +252,61 @@ etable(
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
   #tex = TRUE
 )
+
+
+# Function to extract diagnostics including the First-Stage F and Wu-Hausman Stat
+
+library(AER)
+library(ivreg)
+
+extract_diagnostics <- function(models) {
+  diagnostics_list <- lapply(models, function(model) summary(model, diagnostics = TRUE)$diagnostics)
+  diagnostics_table <- do.call(rbind, lapply(seq_along(diagnostics_list), function(i) {
+    model_name <- names(models)[i]
+    diagnostics <- diagnostics_list[[i]]
+    data.frame(
+      Model = model_name,
+      Weak_Instruments_Statistic = diagnostics[1, "statistic"],
+      Weak_Instruments_PValue = diagnostics[1, "p-value"],
+      Wu_Hausman_Statistic = diagnostics[2, "statistic"],
+      Wu_Hausman_PValue = diagnostics[2, "p-value"]
+    )
+  }))
+  return(diagnostics_table)
+}
+
+# Define models for GDP, Gini, and Emissions
+gdp_models <- list(
+  gdp_ivm01 = ivreg(log_gpd_pc ~ software_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gdp_ivm05 = ivreg(log_gpd_pc ~ software_eci_norm + trade_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + trade_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gdp_ivm06 = ivreg(log_gpd_pc ~ software_eci_norm + tech_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + tech_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gdp_ivm07 = ivreg(log_gpd_pc ~ software_eci_norm + research_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + research_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gdp_ivm08 = ivreg(log_gpd_pc ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, data = reg_df)
+)
+
+gini_models <- list(
+  gini_ivm01 = ivreg(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + log_pop + log_nat_res, data = reg_df),
+  gini_ivm05 = ivreg(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gini_ivm06 = ivreg(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + tech_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + tech_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gini_ivm07 = ivreg(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + research_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + research_eci_norm + log_pop + log_nat_res, data = reg_df),
+  gini_ivm08 = ivreg(gini_norm ~ software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_gpd_pc2 + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, data = reg_df)
+)
+
+emissions_models <- list(
+  em_ivm01 = ivreg(emission_norm ~ software_eci_norm + log_gpd_pc + log_pop + log_nat_res | sim_software_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df),
+  em_ivm05 = ivreg(emission_norm ~ software_eci_norm + trade_eci_norm + log_gpd_pc + log_pop + log_nat_res | sim_software_eci_norm + trade_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df),
+  em_ivm06 = ivreg(emission_norm ~ software_eci_norm + tech_eci_norm + log_gpd_pc + log_pop + log_nat_res | sim_software_eci_norm + tech_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df),
+  em_ivm07 = ivreg(emission_norm ~ software_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res | sim_software_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df),
+  em_ivm08 = ivreg(emission_norm ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res | sim_software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_gpd_pc + log_pop + log_nat_res, data = reg_df)
+)
+
+# Extract diagnostics for all models
+gdp_diag_table <- extract_diagnostics(gdp_models)
+gini_diag_table <- extract_diagnostics(gini_models)
+em_diag_table <- extract_diagnostics(emissions_models)
+
+# Display the tables
+gdp_diag_table
+gini_diag_table
+em_diag_table
 
