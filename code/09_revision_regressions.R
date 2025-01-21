@@ -21,8 +21,12 @@ df <- fread("../outputs/eci_regression_table.csv")
 t1 <- 2020
 t2 <- 2023
 
+# GDP in USD -- 2020-2023
 gdp_t1 <- subset(df, year == t1, select = c(iso3_code, gdp_current_USD))
 gdp_t2 <- subset(df, year == t2, select = c(iso3_code, gdp_current_USD))
+# PPP version does not work AT ALL -- PPP data only available until 2022
+# gdp_t1 <- subset(df, year == t1, select = c(iso3_code, gdp_ppp))
+# gdp_t2 <- subset(df, year == t2, select = c(iso3_code, gdp_ppp))
 colnames(gdp_t1)[2] <- "gdp_t1"
 colnames(gdp_t2)[2] <- "gdp_t2"
 
@@ -73,12 +77,21 @@ df <- df %>%
   mutate(
     log_gdp = log10(gdp_current_USD),
     log_gdp2 = (log_gdp ** 2),
+    log_gdp_ppp = log10(gdp_ppp),
+    log_gdp_ppp2 = (log_gdp_ppp ** 2),
     log_gdp_growth_t12 = log10(gdp_growth_t12),
+    log_gdp_ppp_pc = log10(gdp_ppp / population),
+    log_gdp_ppp_pc2 = (log_gdp_ppp_pc ** 2),
     log_gdp_pc = log10(gdp_per_capita),
     log_gdp_pc2 = (log_gdp_pc ** 2),
     gini_norm = scale(gini_mean),
-    #emission_norm = scale(embodied_emissions),
-    emission_norm = scale(emissions),
+    gini_2020_2022_norm = scale(gini_mean_2020_2022),
+    #emission_per_gdp = (total_ghg_emissions / gdp_current_USD),
+    #log_emission_per_gdp = log10(total_ghg_emissions / gdp_current_USD),
+    log_emission = log10(total_ghg_emissions),
+    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
+    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
+    emission_viktor_norm = scale(emission_viktor),
     human_cap_norm = scale(human_capital_index),
     eci_software_norm = scale(eci_software),
     eci_trade_norm = scale(eci_trade),
@@ -97,20 +110,21 @@ df <- df %>%
 ### Table 1 -- GPD vs ECI -- for replication on new World Bank Data
 reg_df <- subset(df, year==2020)
 reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
-key_columns <- c("log_gdp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+#key_columns <- c("log_gdp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 
-gdp_m01 <- feols(log_gdp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m02 <- feols(log_gdp_pc ~ eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m03 <- feols(log_gdp_pc ~ eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m04 <- feols(log_gdp_pc ~ eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m05 <- feols(log_gdp_pc ~ eci_software_norm + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m06 <- feols(log_gdp_pc ~ eci_software_norm + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m07 <- feols(log_gdp_pc ~ eci_software_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m08 <- feols(log_gdp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_ivm01 <- feols(log_gdp_pc ~ 1 | eci_software_norm + log_pop + log_nat_res ~ sim_eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_ivm08 <- feols(log_gdp_pc ~ 1 | eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m02 <- feols(log_gdp_ppp_pc ~ eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m03 <- feols(log_gdp_ppp_pc ~ eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m04 <- feols(log_gdp_ppp_pc ~ eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m05 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m06 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m07 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm01 <- feols(log_gdp_ppp_pc ~ 1 | eci_software_norm + log_pop + log_nat_res ~ sim_eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_ivm08 <- feols(log_gdp_ppp_pc ~ 1 | eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
@@ -123,9 +137,13 @@ etable(
 
 
 
+
+
+
 ### GDP growth vs ECI -- cross sectional growth from 2020-2023
 reg_df <- subset(df, year==2020)
-key_columns <- c("log_gdp_growth_t12", "log_gdp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+#key_columns <- c("log_gdp_growth_t12", "log_gdp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_growth_t12", "log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 
@@ -154,13 +172,8 @@ etable(
   digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
-  tex = TRUE
+  tex = FALSE
 )
-
-
-
-
-
 
 
 
@@ -201,20 +214,22 @@ etable(
 # drop rows w/ NAs in key columns
 reg_df <- subset(df, year==2020)
 reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
-key_columns <- c("emission_norm", "log_gdp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+#key_columns <- c("emission_norm", "log_gdp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+key_columns <- c("log_emission_per_gdp", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+#key_columns <- c("log_emission", "log_gdp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 
-em_m01 <- feols(emission_norm ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m02 <- feols(emission_norm ~ eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m03 <- feols(emission_norm ~ eci_tech_norm + log_gdp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m04 <- feols(emission_norm ~ eci_research_norm + log_gdp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m05 <- feols(emission_norm ~ eci_software_norm + log_gdp_pc + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m06 <- feols(emission_norm ~ eci_software_norm + log_gdp_pc + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m07 <- feols(emission_norm ~ eci_software_norm + log_gdp_pc + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m08 <- feols(emission_norm ~ eci_software_norm + log_gdp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm01 <- feols(emission_norm ~ 1 | eci_software_norm + log_gdp_pc + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_ivm08 <- feols(emission_norm ~ 1 | eci_software_norm + log_gdp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + + log_gdp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m01 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m02 <- feols(log_emission_per_gdp ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m03 <- feols(log_emission_per_gdp ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m04 <- feols(log_emission_per_gdp ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m05 <- feols(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m06 <- feols(log_emission_per_gdp ~ eci_software_norm + eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m07 <- feols(log_emission_per_gdp ~ eci_software_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(log_emission ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm01 <- feols(log_emission_per_gdp ~ 1 | eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_ivm08 <- feols(log_emission_per_gdp ~ 1 | eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res ~ sim_eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
@@ -650,6 +665,17 @@ key_columns <- c("emission_norm", "log_gdp_pc", "eci_software_norm", "eci_trade_
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 
+
+em_bm01 <- lm(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm02 <- lm(log_emission_per_gdp ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm03 <- lm(log_emission_per_gdp ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm04 <- lm(log_emission_per_gdp ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm05 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm06 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm07 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm08 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+
+
 em_bm01 <- lm(emission_norm ~ eci_software_norm + log_gdp_pc + log_pop + log_nat_res, data = reg_df)
 em_bm02 <- lm(emission_norm ~ eci_trade_norm + log_gdp_pc + log_pop + log_nat_res, data = reg_df)
 em_bm03 <- lm(emission_norm ~ eci_tech_norm + log_gdp_pc + log_pop + log_nat_res, data = reg_df)
@@ -658,6 +684,7 @@ em_bm05 <- lm(emission_norm ~ eci_software_norm + log_gdp_pc + eci_trade_norm + 
 em_bm06 <- lm(emission_norm ~ eci_software_norm + log_gdp_pc + eci_tech_norm + log_pop + log_nat_res, data = reg_df)
 em_bm07 <- lm(emission_norm ~ eci_software_norm + log_gdp_pc + eci_research_norm + log_pop + log_nat_res, data = reg_df)
 em_bm08 <- lm(emission_norm ~ eci_software_norm + log_gdp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+
 
 car::vif(em_bm01)
 car::vif(em_bm02)
@@ -694,6 +721,45 @@ etable(
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = TRUE
 )
+
+
+
+
+
+
+
+### Gini vs ECI -- shorter averages
+reg_df <- subset(df, year==2020)
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("gini_2020_2022_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+
+gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m02 <- feols(gini_2020_2022_norm ~ eci_trade_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m03 <- feols(gini_2020_2022_norm ~ eci_tech_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m04 <- feols(gini_2020_2022_norm ~ eci_research_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m05 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m06 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m07 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm01 <- feols(gini_2020_2022_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm08 <- feols(gini_2020_2022_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + log_gdp_ppp_pc2 + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08, # gini_ivm01, gini_ivm08,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = TRUE
+)
+
+
+
+
+
+
 
 
 
