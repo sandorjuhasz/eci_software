@@ -102,8 +102,8 @@ etable(
   em_m01, em_m02, em_m03, em_m04, em_m05, em_m06, em_m07, em_m08,
   #digits = 3,
   digits.stats = 3,
-  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
-  #tex = TRUE
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
 )
 
 
@@ -309,4 +309,56 @@ em_diag_table <- extract_diagnostics(emissions_models)
 gdp_diag_table
 gini_diag_table
 em_diag_table
+
+
+
+
+
+###### revision -- new World Bank Data
+
+# dataframe from 01_data_prep.ipynb
+df <- fread("../outputs/eci_regression_table.csv")
+
+# 2020 crossec test
+df <- subset(df, year==2020)
+
+# manipulation
+df$log_gdp_per_capita <- log10(df$gdp_per_capita)
+df$log_gdp_per_capita2 <- df$log_gdp_per_capita ** 2
+#df$gini_norm <- scale(df$gini_mean)
+#df$emission_norm <- scale(df$embodied_emissions)
+#df$emission_norm <- scale(df$emissions)
+#df$software_eci_norm <- scale(df$software_eci_2020)
+df$software_eci_norm <- scale(df$eci)
+#df$trade_eci_norm <- scale(df$trade_eci_2020)
+#df$tech_eci_norm <- scale(df$tech_eci_2020)
+#df$research_eci_norm <- scale(df$research_eci_2020)
+df$log_pop <- log10(df$population)
+df$log_nat_res <- log10(df$natural_resources)
+
+
+### GPD vs ECI
+# drop rows w/ NAs in key columns
+key_columns <- c("log_gdp_per_capita", "software_eci_norm", "log_pop", "log_nat_res")
+reg_df <- df[complete.cases(df[, ..key_columns]), ]
+
+
+summary(gdp_m01 <- feols(log_gdp_per_capita ~ software_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df))
+#gdp_m02 <- feols(log_gdp_per_capita ~ trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m03 <- feols(log_gdp_per_capita ~ tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m04 <- feols(log_gdp_per_capita ~ research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m05 <- feols(log_gdp_per_capita ~ software_eci_norm + trade_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m06 <- feols(log_gdp_per_capita ~ software_eci_norm + tech_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m07 <- feols(log_gdp_per_capita ~ software_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+#gdp_m08 <- feols(log_gdp_per_capita ~ software_eci_norm + trade_eci_norm + tech_eci_norm + research_eci_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  gdp_m01, gdp_m02, gdp_m03, gdp_m04, gdp_m05, gdp_m06, gdp_m07, gdp_m08,
+  #digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1)
+  #tex = TRUE
+)
+
 
