@@ -1,0 +1,631 @@
+Series Name,Series Code,Country Name,Country Code,2018 [YR2018],2019 [YR2019],2020 [YR2020]
+Expected Years of School,HD.HCI.EYRS,Afghanistan,AFG,8.72033977508545,..,8.90189075469971
+Expected Years of School,HD.HCI.EYRS,Albania,ALB,12.8855075836182,..,12.8893814086914
+Expected Years of School,HD.HCI.EYRS,Algeria,DZA,11.7753181457519,..,11.8480348587036
+Expected Years of School,HD.HCI.EYRS,American Samoa,ASM,..,..,..
+Expected Years of School,HD.HCI.EYRS,Andorra,AND,..,..,..
+Expected Years of School,HD.HCI.EYRS,Angola,AGO,8.12006568908691,..,8.12006568908691
+Expected Years of School,HD.HCI.EYRS,Antigua and Barbuda,ATG,12.7771034240723,..,12.9675598144531
+Expected Years of School,HD.HCI.EYRS,Argentina,ARG,12.8795232772827,..,12.8795232772827
+Expected Years of School,HD.HCI.EYRS,Armenia,ARM,11.3868026733398,..,11.2798700332642
+Expected Years of School,HD.HCI.EYRS,Aruba,ABW,..,..,..
+Expected Years of School,HD.HCI.EYRS,Australia,AUS,13.6014432907104,..,13.6014432907104
+Expected Years of School,HD.HCI.EYRS,Austria,AUT,13.4275989532471,..,13.4275989532471
+Expected Years of School,HD.HCI.EYRS,Azerbaijan,AZE,12.4046535491943,..,12.4437866210938
+Expected Years of School,HD.HCI.EYRS,"Bahamas, The",BHS,..,..,..
+Expected Years of School,HD.HCI.EYRS,Bahrain,BHR,13.1706819534302,..,12.8496723175049
+Expected Years of School,HD.HCI.EYRS,Bangladesh,BGD,10.1777858734131,..,10.1635427474976
+Expected Years of School,HD.HCI.EYRS,Barbados,BRB,..,..,..
+Expected Years of School,HD.HCI.EYRS,Belarus,BLR,13.8009767532349,..,13.8077774047852
+Expected Years of School,HD.HCI.EYRS,Belgium,BEL,13.5244760513306,..,13.5244760513306
+Expected Years of School,HD.HCI.EYRS,Belize,BLZ,..,..,..
+Expected Years of School,HD.HCI.EYRS,Benin,BEN,9.18758773803711,..,9.22453594207764
+Expected Years of School,HD.HCI.EYRS,Bermuda,BMU,..,..,..
+Expected Years of School,HD.HCI.EYRS,Bhutan,BTN,10.2245693206787,..,10.2245693206787
+Expected Years of School,HD.HCI.EYRS,Bolivia,BOL,..,..,..
+Expected Years of School,HD.HCI.EYRS,Bosnia and Herzegovina,BIH,11.7166585922241,..,11.7178030014038
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Afghanistan,AFG,6.79572248458862,..,6.91584062576294
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Albania,ALB,13.2017545700073,..,13.2685985565185
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Algeria,DZA,12.1089897155762,..,12.2455883026123
+"Expected Years of School, Female",HD.HCI.EYRS.FE,American Samoa,ASM,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Andorra,AND,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Angola,AGO,6.97390127182007,..,6.97390127182007
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Antigua and Barbuda,ATG,12.9144411087036,..,13.2999496459961
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Argentina,ARG,13.0612525939941,..,13.0612525939941
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Armenia,ARM,11.6258125305176,..,11.5174217224121
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Aruba,ABW,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Australia,AUS,13.6202220916748,..,13.6202220916748
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Austria,AUT,13.4668941497803,..,13.4668941497803
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Azerbaijan,AZE,12.4450149536133,..,12.400107383728
+"Expected Years of School, Female",HD.HCI.EYRS.FE,"Bahamas, The",BHS,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bahrain,BHR,13.2703657150269,..,13.0523662567139
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bangladesh,BGD,10.5218744277954,..,10.5327920913696
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Barbados,BRB,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Belarus,BLR,13.7589387893677,..,13.7667760848999
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Belgium,BEL,13.5667972564697,..,13.5667972564697
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Belize,BLZ,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Benin,BEN,8.78213405609131,..,8.82330989837646
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bermuda,BMU,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bhutan,BTN,10.7033281326294,..,10.7033281326294
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bolivia,BOL,..,..,..
+"Expected Years of School, Female",HD.HCI.EYRS.FE,Bosnia and Herzegovina,BIH,11.7848148345947,..,11.7880620956421
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Afghanistan,AFG,9.5441370010376,..,9.65538787841797
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Albania,ALB,12.6108322143555,..,12.5587759017944
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Algeria,DZA,11.4427652359009,..,11.4679260253906
+"Expected Years of School, Male",HD.HCI.EYRS.MA,American Samoa,ASM,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Andorra,AND,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Angola,AGO,9.24362468719482,..,9.24362468719482
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Antigua and Barbuda,ATG,12.6448287963867,..,12.6516132354736
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Argentina,ARG,12.7036781311035,..,12.7036781311035
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Armenia,ARM,11.1737947463989,..,11.070237159729
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Aruba,ABW,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Australia,AUS,13.5834541320801,..,13.5834541320801
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Austria,AUT,13.3904275894165,..,13.3904275894165
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Azerbaijan,AZE,12.3686008453369,..,12.4801950454712
+"Expected Years of School, Male",HD.HCI.EYRS.MA,"Bahamas, The",BHS,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bahrain,BHR,13.082573890686,..,12.6725740432739
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bangladesh,BGD,9.84129905700684,..,9.80884552001953
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Barbados,BRB,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Belarus,BLR,13.8405494689941,..,13.8463153839111
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Belgium,BEL,13.4810132980347,..,13.4810132980347
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Belize,BLZ,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Benin,BEN,9.58083820343018,..,9.60848617553711
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bermuda,BMU,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bhutan,BTN,9.76712894439697,..,9.76712894439697
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bolivia,BOL,..,..,..
+"Expected Years of School, Male",HD.HCI.EYRS.MA,Bosnia and Herzegovina,BIH,11.6577959060669,..,11.6569013595581
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Afghanistan,AFG,0.595864593982697,..,0.618072211742401
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Albania,ALB,0.886766493320465,..,0.886766493320465
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Algeria,DZA,0.883103966712952,..,0.883103966712952
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,American Samoa,ASM,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Andorra,AND,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Angola,AGO,0.624288558959961,..,0.624288558959961
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Antigua and Barbuda,ATG,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Argentina,ARG,0.921000003814697,..,0.921000003814697
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Armenia,ARM,0.906010508537292,..,0.906010508537292
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Aruba,ABW,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Australia,AUS,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Austria,AUT,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Azerbaijan,AZE,0.822275400161743,..,0.822275400161743
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,"Bahamas, The",BHS,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bahrain,BHR,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bangladesh,BGD,0.638245224952698,..,0.692000031471252
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Barbados,BRB,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Belarus,BLR,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Belgium,BEL,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Belize,BLZ,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Benin,BEN,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bermuda,BMU,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bhutan,BTN,0.787999987602234,..,0.787999987602234
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bolivia,BOL,..,..,..
+Fraction of Children Under 5 Not Stunted,HD.HCI.STNT,Bosnia and Herzegovina,BIH,0.911134362220764,..,0.911134362220764
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Afghanistan,AFG,0.605092763900757,..,0.618776202201843
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Albania,ALB,0.889984011650085,..,0.889984011650085
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Algeria,DZA,0.892887473106384,..,0.892887473106384
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,American Samoa,ASM,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Andorra,AND,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Angola,AGO,0.658562660217285,..,0.658562660217285
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Antigua and Barbuda,ATG,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Argentina,ARG,0.921000003814697,..,0.921000003814697
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Armenia,ARM,0.922400414943695,..,0.922400414943695
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Aruba,ABW,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Australia,AUS,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Austria,AUT,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Azerbaijan,AZE,0.824696481227875,..,0.824696481227875
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,"Bahamas, The",BHS,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bahrain,BHR,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bangladesh,BGD,0.644677519798279,..,0.697476506233215
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Barbados,BRB,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Belarus,BLR,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Belgium,BEL,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Belize,BLZ,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Benin,BEN,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bermuda,BMU,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bhutan,BTN,0.754999995231628,..,0.754999995231628
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bolivia,BOL,..,..,..
+"Fraction of Children Under 5 Not Stunted, Female",HD.HCI.STNT.FE,Bosnia and Herzegovina,BIH,0.911306202411652,..,0.911306202411652
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Afghanistan,AFG,0.586935997009277,..,0.617406904697418
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Albania,ALB,0.883676111698151,..,0.883676111698151
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Algeria,DZA,0.873736202716827,..,0.873736202716827
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,American Samoa,ASM,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Andorra,AND,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Angola,AGO,0.589939296245575,..,0.589939296245575
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Antigua and Barbuda,ATG,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Argentina,ARG,0.921000003814697,..,0.921000003814697
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Armenia,ARM,0.891441583633423,..,0.891441583633423
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Aruba,ABW,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Australia,AUS,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Austria,AUT,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Azerbaijan,AZE,0.820264279842377,..,0.820264279842377
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,"Bahamas, The",BHS,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bahrain,BHR,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bangladesh,BGD,0.632315993309021,..,0.686951875686646
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Barbados,BRB,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Belarus,BLR,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Belgium,BEL,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Belize,BLZ,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Benin,BEN,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bermuda,BMU,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bhutan,BTN,0.824000000953674,..,0.824000000953674
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bolivia,BOL,..,..,..
+"Fraction of Children Under 5 Not Stunted, Male",HD.HCI.STNT.MA,Bosnia and Herzegovina,BIH,0.910957813262939,..,0.910957813262939
+Harmonized Test Scores,HD.HCI.HLOS,Afghanistan,AFG,354.7587890625,..,354.7587890625
+Harmonized Test Scores,HD.HCI.HLOS,Albania,ALB,429.329010009766,..,434.127593994141
+Harmonized Test Scores,HD.HCI.HLOS,Algeria,DZA,374.089080810547,..,374.089080810547
+Harmonized Test Scores,HD.HCI.HLOS,American Samoa,ASM,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Andorra,AND,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Angola,AGO,325.965484619141,..,325.965484619141
+Harmonized Test Scores,HD.HCI.HLOS,Antigua and Barbuda,ATG,395.897796630859,..,406.997436523438
+Harmonized Test Scores,HD.HCI.HLOS,Argentina,ARG,424.080810546875,..,408.172637939453
+Harmonized Test Scores,HD.HCI.HLOS,Armenia,ARM,442.969451904297,..,442.969451904297
+Harmonized Test Scores,HD.HCI.HLOS,Aruba,ABW,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Australia,AUS,524.26513671875,..,515.685363769531
+Harmonized Test Scores,HD.HCI.HLOS,Austria,AUT,524.832641601563,..,507.639373779297
+Harmonized Test Scores,HD.HCI.HLOS,Azerbaijan,AZE,472.276885986328,..,415.946197509766
+Harmonized Test Scores,HD.HCI.HLOS,"Bahamas, The",BHS,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bahrain,BHR,451.705993652344,..,451.705993652344
+Harmonized Test Scores,HD.HCI.HLOS,Bangladesh,BGD,368.315277099609,..,368.315277099609
+Harmonized Test Scores,HD.HCI.HLOS,Barbados,BRB,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Belarus,BLR,..,..,488.143096923828
+Harmonized Test Scores,HD.HCI.HLOS,Belgium,BEL,519.444946289063,..,516.807861328125
+Harmonized Test Scores,HD.HCI.HLOS,Belize,BLZ,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Benin,BEN,383.9228515625,..,383.9228515625
+Harmonized Test Scores,HD.HCI.HLOS,Bermuda,BMU,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bhutan,BTN,..,..,386.739410400391
+Harmonized Test Scores,HD.HCI.HLOS,Bolivia,BOL,..,..,..
+Harmonized Test Scores,HD.HCI.HLOS,Bosnia and Herzegovina,BIH,460.804229736328,..,416.134063720703
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Afghanistan,AFG,350.146148681641,..,350.146148681641
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Albania,ALB,445.010406494141,..,444.322265625
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Algeria,DZA,383.370758056641,..,383.370758056641
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,American Samoa,ASM,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Andorra,AND,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Angola,AGO,324.924713134766,..,324.924713134766
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Antigua and Barbuda,ATG,403.030090332031,..,417.380493164063
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Argentina,ARG,420.933349609375,..,406.452667236328
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Armenia,ARM,447.720458984375,..,447.720458984375
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Aruba,ABW,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Australia,AUS,528.43408203125,..,519.648071289063
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Austria,AUT,524.013000488281,..,509.630554199219
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Azerbaijan,AZE,479.300933837891,..,419.955108642578
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,"Bahamas, The",BHS,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bahrain,BHR,470.24365234375,..,470.24365234375
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bangladesh,BGD,369.802795410156,..,369.802795410156
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Barbados,BRB,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belarus,BLR,..,..,490.413055419922
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belgium,BEL,517.523742675781,..,517.466064453125
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Belize,BLZ,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Benin,BEN,383.768371582031,..,383.768371582031
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bermuda,BMU,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bhutan,BTN,..,..,370.207977294922
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bolivia,BOL,..,..,..
+"Harmonized Test Scores, Female",HD.HCI.HLOS.FE,Bosnia and Herzegovina,BIH,460.302307128906,..,420.841094970703
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Afghanistan,AFG,357.794738769531,..,357.794738769531
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Albania,ALB,413.584289550781,..,424.344635009766
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Algeria,DZA,365.758361816406,..,365.758361816406
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,American Samoa,ASM,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Andorra,AND,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Angola,AGO,326.810150146484,..,326.810150146484
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Antigua and Barbuda,ATG,389.038848876953,..,396.874908447266
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Argentina,ARG,427.109039306641,..,409.9423828125
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Armenia,ARM,438.548522949219,..,438.548522949219
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Aruba,ABW,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Australia,AUS,520.111938476563,..,511.851531982422
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Austria,AUT,525.700134277344,..,505.707366943359
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Azerbaijan,AZE,466.060852050781,..,412.331970214844
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,"Bahamas, The",BHS,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bahrain,BHR,433.543212890625,..,433.543212890625
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bangladesh,BGD,366.714324951172,..,366.714324951172
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Barbados,BRB,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belarus,BLR,..,..,486.048126220703
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belgium,BEL,521.305908203125,..,516.145446777344
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Belize,BLZ,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Benin,BEN,384.094970703125,..,384.094970703125
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bermuda,BMU,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bhutan,BTN,..,..,389.172485351563
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bolivia,BOL,..,..,..
+"Harmonized Test Scores, Male",HD.HCI.HLOS.MA,Bosnia and Herzegovina,BIH,461.283233642578,..,411.6533203125
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Afghanistan,AFG,0.393489241600037,..,0.400284141302109
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Albania,ALB,0.628666281700134,..,0.634250938892365
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Algeria,DZA,0.531993925571442,..,0.534556448459625
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,American Samoa,ASM,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Andorra,AND,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Angola,AGO,0.360190957784653,..,0.362405389547348
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Antigua and Barbuda,ATG,0.578216969966888,..,0.595703899860382
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Argentina,ARG,0.61736673116684,..,0.602144718170166
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Armenia,ARM,0.58172595500946,..,0.578998804092407
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Aruba,ABW,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Australia,AUS,0.780833959579468,..,0.770239531993866
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Austria,AUT,0.768673121929169,..,0.746739745140076
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Azerbaijan,AZE,0.62931215763092,..,0.577767550945282
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,"Bahamas, The",BHS,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bahrain,BHR,0.663898766040802,..,0.652472019195557
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bangladesh,BGD,0.458553284406662,..,0.46403643488884
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Barbados,BRB,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Belarus,BLR,..,..,0.700078189373016
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Belgium,BEL,0.762759745121002,..,0.76041966676712
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Belize,BLZ,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Benin,BEN,0.396950334310532,..,0.400290727615356
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bermuda,BMU,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bhutan,BTN,..,..,0.475297033786774
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bolivia,BOL,..,..,..
+Human Capital Index (HCI) (scale 0-1),HD.HCI.OVRL,Bosnia and Herzegovina,BIH,0.619265019893646,..,0.57968407869339
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Afghanistan,AFG,0.363862872123718,..,0.368523985147476
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Albania,ALB,0.662464320659637,..,0.664508581161499
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Algeria,DZA,0.552215874195099,..,0.556641519069672
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Angola,AGO,0.353776037693024,..,0.355706423521042
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Antigua and Barbuda,ATG,0.597584545612335,..,0.625670254230499
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Argentina,ARG,0.627702116966248,..,0.613279402256012
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Armenia,ARM,0.606254577636719,..,0.603098571300507
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Australia,AUS,0.79529595375061,..,0.783872067928314
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Austria,AUT,0.779697299003601,..,0.761190295219421
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Azerbaijan,AZE,0.645950555801392,..,0.587314665317535
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bahrain,BHR,0.693866312503815,..,0.685615479946136
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bangladesh,BGD,0.47152790427208,..,0.477598071098328
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Belarus,BLR,..,..,0.734237015247345
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Belgium,BEL,0.771660506725311,..,0.77233612537384
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Benin,BEN,0.397853910923004,..,0.401228040456772
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bhutan,BTN,..,..,0.474738478660584
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Female (scale 0-1)",HD.HCI.OVRL.FE,Bosnia and Herzegovina,BIH,0.62741082906723,..,0.591636478900909
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Afghanistan,AFG,0.351570188999176,..,0.355721712112427
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Albania,ALB,0.648584246635437,..,0.653056144714355
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Algeria,DZA,0.543569445610046,..,0.547680258750916
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Angola,AGO,0.323766797780991,..,0.325340896844864
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Antigua and Barbuda,ATG,0.584537923336029,..,0.61059558391571
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Argentina,ARG,0.616489708423615,..,0.602137565612793
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Armenia,ARM,0.594755709171295,..,0.591697335243225
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Australia,AUS,0.784779489040375,..,0.774503231048584
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Austria,AUT,0.769048452377319,..,0.749268651008606
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Azerbaijan,AZE,0.624517440795898,..,0.569717884063721
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bahrain,BHR,0.68384838104248,..,0.675731420516968
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bangladesh,BGD,0.4618319272995,..,0.467724174261093
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Belarus,BLR,..,..,0.723621428012848
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Belgium,BEL,0.761471271514893,..,0.762182414531708
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Benin,BEN,0.374809116125107,..,0.377930670976639
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bhutan,BTN,..,..,0.450734704732895
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Female, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.FE,Bosnia and Herzegovina,BIH,0.616975784301758,..,0.580709517002106
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Afghanistan,AFG,0.375342547893524,..,0.380444347858429
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Albania,ALB,0.675915539264679,..,0.675461173057556
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Algeria,DZA,0.560430347919464,..,0.565142750740051
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Angola,AGO,0.375477969646454,..,0.377216368913651
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Antigua and Barbuda,ATG,0.610243797302246,..,0.640509724617004
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Argentina,ARG,0.639261424541473,..,0.624488055706024
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Armenia,ARM,0.617133259773254,..,0.613887012004852
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Australia,AUS,0.805662453174591,..,0.792926669120789
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Austria,AUT,0.790127217769623,..,0.773455381393433
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Azerbaijan,AZE,0.664292633533478,..,0.602782309055328
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bahrain,BHR,0.703414976596832,..,0.694999396800995
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bangladesh,BGD,0.480733007192612,..,0.487003445625305
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Belarus,BLR,..,..,0.744484663009644
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Belgium,BEL,0.781572043895721,..,0.782112240791321
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Benin,BEN,0.421303123235703,..,0.424931794404984
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bhutan,BTN,..,..,0.498604714870453
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Female, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.FE,Bosnia and Herzegovina,BIH,0.637436866760254,..,0.601753413677216
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Afghanistan,AFG,0.381032466888428,..,0.38714861869812
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Albania,ALB,0.615919411182404,..,0.624725520610809
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Algeria,DZA,0.524997770786285,..,0.527311027050018
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Angola,AGO,0.328303992748261,..,0.32986369729042
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Antigua and Barbuda,ATG,0.568297505378723,..,0.584080040454865
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Argentina,ARG,0.607228219509125,..,0.59166693687439
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Armenia,ARM,0.571879506111145,..,0.569216191768646
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Australia,AUS,0.771554112434387,..,0.761949002742767
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Austria,AUT,0.759722769260406,..,0.737196564674377
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Azerbaijan,AZE,0.609901905059814,..,0.561639130115509
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bahrain,BHR,0.655826032161713,..,0.644541084766388
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bangladesh,BGD,0.450124621391296,..,0.455268979072571
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Belarus,BLR,..,..,0.690270841121674
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Belgium,BEL,0.753911077976227,..,0.751977562904358
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Benin,BEN,0.37572580575943,..,0.378561913967133
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bhutan,BTN,..,..,0.45032000541687
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Lower Bound (scale 0-1)",HD.HCI.OVRL.LB,Bosnia and Herzegovina,BIH,0.610277891159058,..,0.570883631706238
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Afghanistan,AFG,0.405022948980331,..,0.411275178194046
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Albania,ALB,0.598655641078949,..,0.608002722263336
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Algeria,DZA,0.513784050941467,..,0.515088617801666
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Angola,AGO,0.366803884506226,..,0.369158178567886
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Antigua and Barbuda,ATG,0.559216916561127,..,0.56757777929306
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Argentina,ARG,0.607066631317139,..,0.591290056705475
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Armenia,ARM,0.558102667331696,..,0.555849492549896
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Australia,AUS,0.766766428947449,..,0.75711715221405
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Austria,AUT,0.758228123188019,..,0.733019888401031
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Azerbaijan,AZE,0.613982617855072,..,0.568437039852142
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bahrain,BHR,0.638173401355743,..,0.624628722667694
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bangladesh,BGD,0.446381837129593,..,0.451447725296021
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Belarus,BLR,..,..,0.666736006736755
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Belgium,BEL,0.754185914993286,..,0.749003291130066
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Benin,BEN,0.395908683538437,..,0.39908030629158
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bhutan,BTN,..,..,0.467461943626404
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Male (scale 0-1)",HD.HCI.OVRL.MA,Bosnia and Herzegovina,BIH,0.6115403175354,..,0.568520784378052
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Afghanistan,AFG,0.38912296295166,..,0.394788265228271
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Albania,ALB,0.582826256752014,..,0.595432937145233
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Algeria,DZA,0.506278991699219,..,0.507361650466919
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Angola,AGO,0.329787015914917,..,0.331409335136414
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Antigua and Barbuda,ATG,0.546115040779114,..,0.553666532039642
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Argentina,ARG,0.593780279159546,..,0.578204154968262
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Armenia,ARM,0.546420633792877,..,0.544232785701752
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Australia,AUS,0.75450724363327,..,0.745822191238403
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Austria,AUT,0.746416747570038,..,0.720291674137115
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Azerbaijan,AZE,0.592488467693329,..,0.549915611743927
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bahrain,BHR,0.627203166484833,..,0.614009857177734
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bangladesh,BGD,0.437003701925278,..,0.441508144140243
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Belarus,BLR,..,..,0.653502404689789
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Belgium,BEL,0.742686688899994,..,0.738400757312775
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Benin,BEN,0.369417995214462,..,0.372173577547073
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bhutan,BTN,..,..,0.442547172307968
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Male, Lower Bound (scale 0-1)",HD.HCI.OVRL.LB.MA,Bosnia and Herzegovina,BIH,0.60054212808609,..,0.557565450668335
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Afghanistan,AFG,0.42040342092514,..,0.427129328250885
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Albania,ALB,0.613888561725616,..,0.619630217552185
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Algeria,DZA,0.520891547203064,..,0.52238005399704
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Angola,AGO,0.395108729600906,..,0.397130608558655
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Antigua and Barbuda,ATG,0.571450889110565,..,0.581206917762756
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Argentina,ARG,0.619519352912903,..,0.604211807250977
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Armenia,ARM,0.569255113601685,..,0.566902577877045
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Australia,AUS,0.778917968273163,..,0.768099308013916
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Austria,AUT,0.770269393920898,..,0.745951056480408
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Azerbaijan,AZE,0.633723199367523,..,0.584461212158203
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bahrain,BHR,0.648874461650848,..,0.634944796562195
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bangladesh,BGD,0.455447226762772,..,0.461095005273819
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Belarus,BLR,..,..,0.679396986961365
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Belgium,BEL,0.766138792037964,..,0.759734630584717
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Benin,BEN,0.42304053902626,..,0.426536113023758
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bhutan,BTN,..,..,0.490454584360123
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Male, Upper Bound (scale 0-1)",HD.HCI.OVRL.UB.MA,Bosnia and Herzegovina,BIH,0.62144273519516,..,0.578377842903137
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Afghanistan,AFG,0.405301719903946,..,0.412617266178131
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Albania,ALB,0.64091557264328,..,0.643478035926819
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Algeria,DZA,0.538729906082153,..,0.541510224342346
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,American Samoa,ASM,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Andorra,AND,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Angola,AGO,0.383449137210846,..,0.385374516248703
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Antigua and Barbuda,ATG,0.58822900056839,..,0.607414603233337
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Argentina,ARG,0.627047121524811,..,0.611715614795685
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Armenia,ARM,0.591332137584686,..,0.588532090187073
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Aruba,ABW,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Australia,AUS,0.789870023727417,..,0.777968049049377
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Austria,AUT,0.777316033840179,..,0.756520211696625
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Azerbaijan,AZE,0.646149396896362,..,0.591151416301727
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,"Bahamas, The",BHS,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bahrain,BHR,0.671439230442047,..,0.659845471382141
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bangladesh,BGD,0.466285973787308,..,0.47212889790535
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Barbados,BRB,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Belarus,BLR,..,..,0.709663927555084
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Belgium,BEL,0.77128654718399,..,0.768837928771973
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Belize,BLZ,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Benin,BEN,0.418015986680985,..,0.421737551689148
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bermuda,BMU,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bhutan,BTN,..,..,0.499215334653854
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bolivia,BOL,..,..,..
+"Human Capital Index (HCI), Upper Bound (scale 0-1)",HD.HCI.OVRL.UB,Bosnia and Herzegovina,BIH,0.627376854419708,..,0.588268458843231
+Learning-Adjusted Years of School,HD.HCI.LAYS,Afghanistan,AFG,4.94978761672974,..,5.05283832550049
+Learning-Adjusted Years of School,HD.HCI.LAYS,Albania,ALB,8.85139560699463,..,8.95301818847656
+Learning-Adjusted Years of School,HD.HCI.LAYS,Algeria,DZA,7.04802846908569,..,7.091552734375
+Learning-Adjusted Years of School,HD.HCI.LAYS,American Samoa,ASM,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Andorra,AND,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Angola,AGO,4.23497772216797,..,4.23497772216797
+Learning-Adjusted Years of School,HD.HCI.LAYS,Antigua and Barbuda,ATG,8.09348392486572,..,8.44442176818848
+Learning-Adjusted Years of School,HD.HCI.LAYS,Argentina,ARG,8.73913383483887,..,8.41131019592285
+Learning-Adjusted Years of School,HD.HCI.LAYS,Armenia,ARM,8.07040977478027,..,7.99462080001831
+Learning-Adjusted Years of School,HD.HCI.LAYS,Aruba,ABW,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Australia,AUS,11.4092197418213,..,11.2225046157837
+Learning-Adjusted Years of School,HD.HCI.LAYS,Austria,AUT,11.2755880355835,..,10.9062051773071
+Learning-Adjusted Years of School,HD.HCI.LAYS,Azerbaijan,AZE,9.37348937988281,..,8.28151321411133
+Learning-Adjusted Years of School,HD.HCI.LAYS,"Bahamas, The",BHS,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bahrain,BHR,9.51884078979492,..,9.28683853149414
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bangladesh,BGD,5.99781465530396,..,5.9894208908081
+Learning-Adjusted Years of School,HD.HCI.LAYS,Barbados,BRB,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Belarus,BLR,..,..,10.784273147583
+Learning-Adjusted Years of School,HD.HCI.LAYS,Belgium,BEL,11.2403526306152,..,11.1832885742188
+Learning-Adjusted Years of School,HD.HCI.LAYS,Belize,BLZ,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Benin,BEN,5.6437201499939,..,5.66641664505005
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bermuda,BMU,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bhutan,BTN,..,..,6.32679033279419
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bolivia,BOL,..,..,..
+Learning-Adjusted Years of School,HD.HCI.LAYS,Bosnia and Herzegovina,BIH,8.63853740692139,..,7.80188322067261
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Afghanistan,AFG,3.80719375610352,..,3.87448787689209
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Albania,ALB,9.39986896514893,..,9.43285369873047
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Algeria,DZA,7.42757177352905,..,7.51136064529419
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,American Samoa,ASM,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Andorra,AND,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Angola,AGO,3.62558841705322,..,3.62558841705322
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Antigua and Barbuda,ATG,8.32785415649414,..,8.88182258605957
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Argentina,ARG,8.79666709899902,..,8.49405002593994
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Armenia,ARM,8.3281831741333,..,8.25053691864014
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Aruba,ABW,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Australia,AUS,11.5158233642578,..,11.3243560791016
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Austria,AUT,11.2909240722656,..,10.9810247421265
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Azerbaijan,AZE,9.54385089874268,..,8.33198165893555
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,"Bahamas, The",BHS,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bahrain,BHR,9.98448848724365,..,9.82046794891357
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bangladesh,BGD,6.22562980651855,..,6.23208951950073
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Barbados,BRB,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Belarus,BLR,..,..,10.8022508621216
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Belgium,BEL,11.2338237762451,..,11.2325716018677
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Belize,BLZ,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Benin,BEN,5.39248847961426,..,5.41777181625366
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bermuda,BMU,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bhutan,BTN,..,..,6.33993196487427
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bolivia,BOL,..,..,..
+"Learning-Adjusted Years of School, Female",HD.HCI.LAYS.FE,Bosnia and Herzegovina,BIH,8.67932415008545,..,7.93744134902954
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Afghanistan,AFG,5.46374702453613,..,5.52743482589722
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Albania,ALB,8.34502792358398,..,8.52679920196533
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Algeria,DZA,6.69645929336548,..,6.71118354797363
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,American Samoa,ASM,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Andorra,AND,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Angola,AGO,4.83345651626587,..,4.83345651626587
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Antigua and Barbuda,ATG,7.87092733383179,..,8.03377246856689
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Argentina,ARG,8.68136882781982,..,8.33244132995605
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Armenia,ARM,7.8404016494751,..,7.767737865448
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Aruba,ABW,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Australia,AUS,11.3038673400879,..,11.1243391036987
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Austria,AUT,11.2629594802856,..,10.834620475769
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Azerbaijan,AZE,9.22323322296143,..,8.2335729598999
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,"Bahamas, The",BHS,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bahrain,BHR,9.07497787475586,..,8.79057312011719
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bangladesh,BGD,5.7743124961853,..,5.75527095794678
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Barbados,BRB,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Belarus,BLR,..,..,10.7679605484009
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Belgium,BEL,11.2443714141846,..,11.1330623626709
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Belize,BLZ,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Benin,BEN,5.88792276382446,..,5.90491390228271
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bermuda,BMU,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bhutan,BTN,..,..,6.08175611495972
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bolivia,BOL,..,..,..
+"Learning-Adjusted Years of School, Male",HD.HCI.LAYS.MA,Bosnia and Herzegovina,BIH,8.6040735244751,..,7.67776346206665
+Probability of Survival to Age 5,HD.HCI.MORT,Afghanistan,AFG,0.935266137123108,..,0.937723577022552
+Probability of Survival to Age 5,HD.HCI.MORT,Albania,ALB,0.990977764129639,..,0.991176664829254
+Probability of Survival to Age 5,HD.HCI.MORT,Algeria,DZA,0.975977122783661,..,0.976517915725708
+Probability of Survival to Age 5,HD.HCI.MORT,American Samoa,ASM,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Andorra,AND,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Angola,AGO,0.919558048248291,..,0.922835469245911
+Probability of Survival to Age 5,HD.HCI.MORT,Antigua and Barbuda,ATG,0.993308007717133,..,0.993558526039124
+Probability of Survival to Age 5,HD.HCI.MORT,Argentina,ARG,0.989577353000641,..,0.990055024623871
+Probability of Survival to Age 5,HD.HCI.MORT,Armenia,ARM,0.986994922161102,..,0.987619340419769
+Probability of Survival to Age 5,HD.HCI.MORT,Aruba,ABW,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Australia,AUS,0.996263206005096,..,0.996311366558075
+Probability of Survival to Age 5,HD.HCI.MORT,Austria,AUT,0.996415019035339,..,0.996477246284485
+Probability of Survival to Age 5,HD.HCI.MORT,Azerbaijan,AZE,0.977119386196136,..,0.978476583957672
+Probability of Survival to Age 5,HD.HCI.MORT,"Bahamas, The",BHS,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Bahrain,BHR,0.992727696895599,..,0.992905378341675
+Probability of Survival to Age 5,HD.HCI.MORT,Bangladesh,BGD,0.968063414096832,..,0.969842970371246
+Probability of Survival to Age 5,HD.HCI.MORT,Barbados,BRB,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Belarus,BLR,0.996378839015961,..,0.996579349040985
+Probability of Survival to Age 5,HD.HCI.MORT,Belgium,BEL,0.996235370635986,..,0.996348440647125
+Probability of Survival to Age 5,HD.HCI.MORT,Belize,BLZ,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Benin,BEN,0.904542863368988,..,0.907013535499573
+Probability of Survival to Age 5,HD.HCI.MORT,Bermuda,BMU,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Bhutan,BTN,0.969226539134979,..,0.970300734043121
+Probability of Survival to Age 5,HD.HCI.MORT,Bolivia,BOL,..,..,..
+Probability of Survival to Age 5,HD.HCI.MORT,Bosnia and Herzegovina,BIH,0.994069695472717,..,0.994194805622101
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Afghanistan,AFG,0.938916444778442,..,0.941324710845947
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Albania,ALB,0.991616129875183,..,0.991797208786011
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Algeria,DZA,0.977509140968323,..,0.978036820888519
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,American Samoa,ASM,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Andorra,AND,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Angola,AGO,0.925984859466553,..,0.928930759429932
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Antigua and Barbuda,ATG,0.993889272212982,..,0.994124472141266
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Argentina,ARG,0.990525245666504,..,0.990962862968445
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Armenia,ARM,0.988448441028595,..,0.98898446559906
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Aruba,ABW,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Australia,AUS,0.996598899364471,..,0.996642529964447
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Austria,AUT,0.996770203113556,..,0.996823191642761
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Azerbaijan,AZE,0.979410231113434,..,0.980643391609192
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,"Bahamas, The",BHS,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bahrain,BHR,0.99298357963562,..,0.993150532245636
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bangladesh,BGD,0.970262467861176,..,0.972026407718658
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Barbados,BRB,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Belarus,BLR,0.99683141708374,..,0.997005641460419
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Belgium,BEL,0.99666827917099,..,0.996768891811371
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Belize,BLZ,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Benin,BEN,0.910842418670654,..,0.913164734840393
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bermuda,BMU,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bhutan,BTN,0.972060441970825,..,0.973070383071899
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bolivia,BOL,..,..,..
+"Probability of Survival to Age 5, Female",HD.HCI.MORT.FE,Bosnia and Herzegovina,BIH,0.99466997385025,..,0.994780659675598
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Afghanistan,AFG,0.931880831718445,..,0.934254705905914
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Albania,ALB,0.990374684333801,..,0.990582585334778
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Algeria,DZA,0.974519670009613,..,0.975075542926788
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,American Samoa,ASM,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Andorra,AND,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Angola,AGO,0.913508772850037,..,0.917002379894257
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Antigua and Barbuda,ATG,0.992752850055695,..,0.993029117584229
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Argentina,ARG,0.988674402236938,..,0.989193558692932
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Armenia,ARM,0.985609233379364,..,0.986330449581146
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Aruba,ABW,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Australia,AUS,0.995942533016205,..,0.995994746685028
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Austria,AUT,0.996079981327057,..,0.996149897575378
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Azerbaijan,AZE,0.974904239177704,..,0.976425766944885
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,"Bahamas, The",BHS,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bahrain,BHR,0.992489039897919,..,0.992677271366119
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bangladesh,BGD,0.965953230857849,..,0.967806696891785
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Barbados,BRB,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Belarus,BLR,0.995949506759644,..,0.996176183223724
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Belgium,BEL,0.995824813842773,..,0.995948493480682
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Belize,BLZ,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Benin,BEN,0.898669242858887,..,0.901170194149017
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bermuda,BMU,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bhutan,BTN,0.966460049152374,..,0.967607259750366
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bolivia,BOL,..,..,..
+"Probability of Survival to Age 5, Male",HD.HCI.MORT.MA,Bosnia and Herzegovina,BIH,0.993500947952271,..,0.993635296821594
+Survival Rate from Age 15-60,HD.HCI.AMRT,Afghanistan,AFG,0.780381858348846,..,0.78774082660675
+Survival Rate from Age 15-60,HD.HCI.AMRT,Albania,ALB,0.927792549133301,..,0.929365992546082
+Survival Rate from Age 15-60,HD.HCI.AMRT,Algeria,DZA,0.90692549943924,..,0.909282267093658
+Survival Rate from Age 15-60,HD.HCI.AMRT,American Samoa,ASM,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Andorra,AND,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Angola,AGO,0.72148072719574,..,0.729358732700348
+Survival Rate from Age 15-60,HD.HCI.AMRT,Antigua and Barbuda,ATG,0.894959628582001,..,0.89720755815506
+Survival Rate from Age 15-60,HD.HCI.AMRT,Argentina,ARG,0.885885715484619,..,0.888269186019897
+Survival Rate from Age 15-60,HD.HCI.AMRT,Armenia,ARM,0.883577227592468,..,0.885818600654602
+Survival Rate from Age 15-60,HD.HCI.AMRT,Aruba,ABW,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Australia,AUS,0.944260776042938,..,0.94614177942276
+Survival Rate from Age 15-60,HD.HCI.AMRT,Austria,AUT,0.936358630657196,..,0.937184393405914
+Survival Rate from Age 15-60,HD.HCI.AMRT,Azerbaijan,AZE,0.880382418632507,..,0.88195812702179
+Survival Rate from Age 15-60,HD.HCI.AMRT,"Bahamas, The",BHS,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bahrain,BHR,0.932852387428284,..,0.934414565563202
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bangladesh,BGD,0.864222168922424,..,0.868512272834778
+Survival Rate from Age 15-60,HD.HCI.AMRT,Barbados,BRB,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Belarus,BLR,0.849724471569061,..,0.853127121925354
+Survival Rate from Age 15-60,HD.HCI.AMRT,Belgium,BEL,0.929122745990753,..,0.931235253810883
+Survival Rate from Age 15-60,HD.HCI.AMRT,Belize,BLZ,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Benin,BEN,0.76238340139389,..,0.768260359764099
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bermuda,BMU,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bhutan,BTN,0.800723671913147,..,0.806836605072021
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bolivia,BOL,..,..,..
+Survival Rate from Age 15-60,HD.HCI.AMRT,Bosnia and Herzegovina,BIH,0.911312162876129,..,0.91362988948822
+,,,,,,
+,,,,,,
+,,,,,,
+Data from database: Human Capital Index,,,,,,
+Last Updated: 09/21/2020,,,,,,
