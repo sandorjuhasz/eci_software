@@ -1,7 +1,7 @@
 ## Intermediate data files
 
-`eci_software_2020_2023.csv` : yearly complexity values based on GitHub data<br>
-`proximity_2020_2023.csv` : yearly language-language proximity (relatedness) values based on GitHub data<br>
+`eci_software_2020_2023.csv` : yearly complexity values based on GitHub data (28-06-2024 version)<br>
+`proximity_2020_2023.csv` : yearly language-language proximity (relatedness) values based on GitHub data (28-06-2024 version)<br>
 `patent_cdf.csv` : yearly complexity values based on patent data (for ECI technology)<br>
 `research_cdf.csv` : yearly complexity values based on scientific papers (for ECI research)<br>
 `trade_cdf.csv` : yearly complexity values based on trade data (for ECI trade)<br>
