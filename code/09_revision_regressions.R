@@ -183,7 +183,7 @@ etable(
 ### Gini vs ECI -- cross sectional 2020
 reg_df <- subset(df, year==2020)
 reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
-key_columns <- c("gini_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+key_columns <- c("gini_norm", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 
