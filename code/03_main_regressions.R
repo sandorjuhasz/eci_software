@@ -6,8 +6,8 @@
 # --- Table 1 -- GDP per capita vs ECI software
 # --- Table 2 -- Gini vs ECI software
 # --- Table 3 -- Emission vs ECI software
-# --- Table 4 -- Entry models
-# --- Table 5 -- Exit models
+# --- Table 4 -- Entry models 0011 fashion
+# --- Table 5 -- Exit models 1100 fashion
 
 
 
