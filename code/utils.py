@@ -119,6 +119,46 @@ def rca_calculation(table, c_column, p_column, value_column, threshold):
     return table
 
 
+def world_bank_data_cleaner(df, names_list, new_names):
+    """function to clean similar tables from the World Bank Databank"""
+    filtered_wdf = df[df["variable"].isin(names_list)]
+
+    # melt the dataframe for all variables
+    long_df = pd.melt(
+        filtered_wdf,
+        id_vars=["variable", "country_name", "iso3_code"],
+        value_vars=[col for col in filtered_wdf.columns if "YR" in col],
+        var_name="year",
+        value_name="value",
+    )
+
+    # extract the year
+    long_df["year"] = long_df["year"].str.extract(r"(\d{4})")
+
+    # pivot to create separate columns for each variable (optional)
+    country_df = long_df.pivot_table(
+        index=["country_name", "iso3_code", "year"],
+        columns="variable",
+        values="value",
+        aggfunc="first",
+    ).reset_index()
+
+    # rename columns
+    rename_dict = dict(zip(names_list, new_names))
+    country_df.rename(columns=rename_dict, inplace=True)
+    country_df["year"] = country_df["year"].astype(int)
+    return country_df
+
+
+def mat_reshape(path, column_labels):
+    """to reshape the matrices from Viktor Stojkoski"""
+    mat = pd.read_csv(path)
+    mat.set_index("Row", inplace=True)
+    mat = mat.unstack().reset_index()
+    mat.columns = column_labels
+    return mat
+
+
 ### relatedness data preparation
 def edgelist_cleaning_for_software_space(data, key_columns):
     """get software space network from raw proximity values"""
