@@ -199,7 +199,7 @@ reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 em_m01 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m08 <- feols(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m01_075 <- feols(log_emission_per_gdp ~ eci_software075_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m01_075 <- feols(log_emission_per_gdp ~ eci_software075_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m08_075 <- feols(log_emission_per_gdp ~ eci_software075_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m01_125 <- feols(log_emission_per_gdp ~ eci_software125_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m08_125 <- feols(log_emission_per_gdp ~ eci_software125_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
@@ -211,9 +211,6 @@ etable(
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
 )
-
-
-
 
 
 # ENTRY regressions
@@ -255,7 +252,6 @@ etable(
 )
 
 
-
 # EXIT regressions
 ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
 ex_df$rel_density <- scale(ex_df$density)
@@ -285,13 +281,12 @@ ex_m6_125 <- feols(exit01 ~ density + ubiquity, cluster = "iso2_code", data = ex
 ex_m7_125 <- feols(exit01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", data = ex_df125)
 
 
-
 etable(
   ex_m1, ex_m6, ex_m7, ex_m1_075, ex_m6_075, ex_m7_075, ex_m1_125, ex_m6_125, ex_m7_125,
   digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
-  tex = TRUE
+  tex = FALSE
 )
 
 
