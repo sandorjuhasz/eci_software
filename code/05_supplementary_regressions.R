@@ -6,7 +6,7 @@
 # --- SI Entry logit
 # --- SI Exit logit
 # --- SI different RCA thresholds
-# growth regressions
+# --- SI growth regressions
 # Mean, median, percentiles descriptive tables
 # clustering exercise and results
 # Gini and emission regressions w/ GDP + GDP**2
@@ -288,5 +288,92 @@ etable(
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
 )
+
+
+
+
+
+
+# --- SI growth regressions
+
+
+# dataframe from 01_data_prep.ipynb
+df <- fread("../outputs/eci_regression_table.csv")
+
+# calculate growth for cross sectional growth models
+t1 <- 2020
+t2 <- 2023
+
+# GDP in USD -- 2020-2023
+# PPP version does not work AT ALL -- PPP data only available until 2022
+gdp_t1 <- subset(df, year == t1, select = c(iso3_code, gdp_current_USD))
+gdp_t2 <- subset(df, year == t2, select = c(iso3_code, gdp_current_USD))
+colnames(gdp_t1)[2] <- "gdp_t1"
+colnames(gdp_t2)[2] <- "gdp_t2"
+
+# merge the GDP data for 2020 and 2022 by iso3_code
+gdp_growth_data <- merge(
+  gdp_t1,
+  gdp_t2,
+  by = "iso3_code",
+  all = TRUE
+)
+
+# calculate GDP growth (2020 to 2022) as a percentage
+gdp_growth_data$gdp_growth_t12 <- with(
+  gdp_growth_data, 
+  ifelse(!is.na(gdp_t1) & !is.na(gdp_t2), (gdp_t2 / gdp_t1), NA)
+)
+
+# merge the calculated growth back into the original data
+df <- merge(
+  df,
+  unique(gdp_growth_data[, c("iso3_code", "gdp_growth_t12")]), 
+  by = "iso3_code",
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+# manipulation
+df <- df %>%
+  group_by(year) %>%
+  mutate(
+    log_gdp = log10(gdp_current_USD),
+    log_gdp_growth_t12 = log10(gdp_growth_t12),
+    eci_software_norm = scale(eci_software),
+    eci_trade_norm = scale(eci_trade),
+    eci_tech_norm = scale(eci_tech),
+    eci_research_norm = scale(eci_research),
+    log_pop = log10(population),
+    log_nat_res = log10(natural_resources)
+  ) %>%
+  data.table()
+
+
+### GDP growth vs ECI -- cross sectional growth from 2020-2023
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_growth_t12", "log_gdp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+grm00 <- feols(log_gdp_growth_t12 ~ log_gdp, vcov = "HC1", data = reg_df)
+grm01 <- feols(log_gdp_growth_t12 ~ eci_software_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm02 <- feols(log_gdp_growth_t12 ~ eci_trade_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm03 <- feols(log_gdp_growth_t12 ~ eci_tech_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm04 <- feols(log_gdp_growth_t12 ~ eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm05 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_trade_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm06 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_tech_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm07 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm08 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+etable(
+  grm00, grm01, grm02, grm03, grm04, grm05, grm06, grm07, grm08,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+
 
 
