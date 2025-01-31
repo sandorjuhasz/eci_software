@@ -12,12 +12,13 @@
 # --- SI Identical samples regressions
 # --- SI No mathematical dependencies tables
 # --- SI VIF tables for main regressions
+# --- SI stepwise IV regressions
+
+
 
 # Mean, median, percentiles descriptive tables
 # clustering exercise and results
 # Stepwise IV regressions
-
-
 
 
 
@@ -709,3 +710,70 @@ car::vif(em_bm08)
 
 
 
+
+
+
+# --- SI stepwise IV regressions
+
+# baseline table
+df <- create_baseline_table("../outputs/eci_regression_table.csv")
+
+# IVs from 01_data_prep_complexity.ipynb
+df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
+  select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  filter(year == 2020)
+df <- merge(
+  df,
+  df_iv,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+# GDP per capita -- first stage
+reg_df <- subset(df, year==2020)
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(fs_gdp <- feols(
+  eci_software_norm ~ sim_eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+)
+reg_df$first_stage_pred <- predict(fs_gdp, newdata = reg_df)
+print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
+
+
+# Gini -- first stage
+reg_df <- subset(df, year==2020)
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("gini_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(fs_gini <- feols(
+  eci_software_norm ~ sim_eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+)
+reg_df$first_stage_pred <- predict(fs_gini, newdata = reg_df)
+print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
+
+
+# Emission -- first stage
+reg_df <- subset(df, year==2020)
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("log_emission_per_gdp", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(fs_em <- feols(
+  eci_software_norm ~ sim_eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+)
+reg_df$first_stage_pred <- predict(fs_em, newdata = reg_df)
+print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
+
+
+etable(
+  fs_gdp, fs_gini, fs_em,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
