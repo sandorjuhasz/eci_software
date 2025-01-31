@@ -10,12 +10,11 @@
 # --- SI Gini and emission regressions w/ GDP + GDP**2
 # --- SI Gini 2020-2022 table
 # --- SI Identical samples regressions
+# --- SI No mathematical dependencies tables
+# --- SI VIF tables for main regressions
 
 # Mean, median, percentiles descriptive tables
 # clustering exercise and results
-# No mathematical dependencies tables -- multicoll section maybe?
-# VIF tables -- multicoll section maybe?
-
 # Stepwise IV regressions
 
 
@@ -527,3 +526,186 @@ save_etable_to_word(gini_2020_2022_etable)
 
 
 # --- SI Identical samples regressions
+
+# baseline
+df <- fread("../outputs/eci_regression_table.csv")
+
+# manipulation
+df <- df %>%
+  group_by(year) %>%
+  mutate(
+    log_gdp_usd = log10(gdp_current_USD),
+    log_gdp_ppp = log10(gdp_ppp),
+    gdp_ppp_pc = gdp_ppp / population,
+    log_gdp_ppp_pc = log10(gdp_ppp_pc),
+    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
+    gini_norm = scale(gini_mean),
+    gini_2020_2022_norm = scale(gini_mean_2020_2022),
+    log_emission = log10(total_ghg_emissions),
+    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
+    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
+    eci_software_norm = scale(eci_software),
+    eci_trade_norm = scale(eci_trade),
+    eci_tech_norm = scale(eci_tech),
+    eci_research_norm = scale(eci_research),
+    log_pop = log10(population),
+    log_nat_res = log10(natural_resources)
+  ) %>%
+  data.table()
+
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_ppp_pc", "gini_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m01 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop+ log_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+
+identical_sample_etable <- etable(
+  gdp_m01, gdp_m08, gini_m01, gini_m08, em_m01, em_m08,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+print(identical_sample_etable)
+save_etable_to_word(identical_sample_etable)
+
+
+
+
+
+
+# --- SI No mathematical dependencies tables
+
+# baseline table
+df <- create_baseline_table("../outputs/eci_regression_table.csv")
+
+# GDP per capita
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_nat_res", "log_pop")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gdp_m01 <- feols(log_gdp_ppp ~ eci_software_norm + log_nat_res + log_pop, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_nat_res + log_pop, vcov = "HC1", data = reg_df)
+
+
+### Gini
+reg_df <- subset(df, year==2020)
+key_columns <- c("gini_norm", "log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+# Emissions
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_emission", "log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+em_m01 <- feols(log_emission ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(log_emission ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+
+no_math_dep_etable <- etable(
+  gdp_m01, gdp_m08, gini_m01, gini_m08, em_m01, em_m08,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+print(no_math_dep_etable)
+save_etable_to_word(no_math_dep_etable)
+
+
+
+
+
+
+# --- SI VIF tables for main regressions
+
+# baseline table
+df <- create_baseline_table("../outputs/eci_regression_table.csv")
+
+# GDP per capita models 2020
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gdp_bm01 <- lm(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm02 <- lm(log_gdp_ppp_pc ~ eci_trade_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm03 <- lm(log_gdp_ppp_pc ~ eci_tech_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm04 <- lm(log_gdp_ppp_pc ~ eci_research_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm05 <- lm(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm06 <- lm(log_gdp_ppp_pc ~ eci_software_norm + eci_tech_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm07 <- lm(log_gdp_ppp_pc ~ eci_software_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm08 <- lm(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+
+car::vif(gdp_bm01)
+car::vif(gdp_bm02)
+car::vif(gdp_bm03)
+car::vif(gdp_bm04)
+car::vif(gdp_bm05)
+car::vif(gdp_bm06)
+car::vif(gdp_bm07)
+car::vif(gdp_bm08)
+
+
+# Gini models for 2020
+reg_df <- subset(df, year==2020)
+key_columns <- c("gini_norm", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+# change to lm()
+gini_bm01 <- lm(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+gini_bm02 <- lm(gini_norm ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+gini_bm03 <- lm(gini_norm ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+gini_bm04 <- lm(gini_norm ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+gini_bm05 <- lm(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + log_pop + log_nat_res, data = reg_df)
+gini_bm06 <- lm(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_tech_norm + log_pop + log_nat_res, data = reg_df)
+gini_bm07 <- lm(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+gini_bm08 <- lm(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+
+car::vif(gini_bm01)
+car::vif(gini_bm02)
+car::vif(gini_bm03)
+car::vif(gini_bm04)
+car::vif(gini_bm05)
+car::vif(gini_bm06)
+car::vif(gini_bm07)
+car::vif(gini_bm08)
+
+
+### emissions vs ECI
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_emission_per_gdp", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+
+em_bm01 <- lm(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm02 <- lm(log_emission_per_gdp ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm03 <- lm(log_emission_per_gdp ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm04 <- lm(log_emission_per_gdp ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm05 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm06 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm07 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+em_bm08 <- lm(log_emission_per_gdp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, data = reg_df)
+
+
+car::vif(em_bm01)
+car::vif(em_bm02)
+car::vif(em_bm03)
+car::vif(em_bm04)
+car::vif(em_bm05)
+car::vif(em_bm06)
+car::vif(em_bm07)
+car::vif(em_bm08)
+
+
+
