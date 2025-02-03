@@ -13,12 +13,9 @@
 # --- SI No mathematical dependencies tables
 # --- SI VIF tables for main regressions
 # --- SI stepwise IV regressions
-
-
+# --- SI language clusters
 
 # Mean, median, percentiles descriptive tables
-# clustering exercise and results
-# Stepwise IV regressions
 
 
 
@@ -741,7 +738,8 @@ summary(fs_gdp <- feols(
   eci_software_norm ~ sim_eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 )
 reg_df$first_stage_pred <- predict(fs_gdp, newdata = reg_df)
-print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
+#print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
+print(cor(reg_df$eci_software_norm, reg_df$sim_eci_software_norm))
 
 
 # Gini -- first stage
@@ -755,7 +753,7 @@ summary(fs_gini <- feols(
 )
 reg_df$first_stage_pred <- predict(fs_gini, newdata = reg_df)
 print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
-
+print(cor(reg_df$eci_software_norm, reg_df$sim_eci_software_norm))
 
 # Emission -- first stage
 reg_df <- subset(df, year==2020)
@@ -768,7 +766,7 @@ summary(fs_em <- feols(
 )
 reg_df$first_stage_pred <- predict(fs_em, newdata = reg_df)
 print(cor(reg_df$eci_software_norm, reg_df$first_stage_pred))
-
+print(cor(reg_df$eci_software_norm, reg_df$sim_eci_software_norm))
 
 etable(
   fs_gdp, fs_gini, fs_em,
@@ -777,3 +775,70 @@ etable(
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
 )
+
+
+
+
+
+
+# --- SI language clusters
+
+# baseline table
+df <- create_baseline_table("../outputs/eci_regression_table.csv")
+
+# ECI table using clusters of languages
+eci_clusters <- fread("../outputs/eci_clusters_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
+  unique() %>%
+  rename(eci_clusters = eci) %>%
+  group_by(year) %>%
+  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  eci_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+# GDP regressions
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_ppp_pc", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+# Gini regressions
+reg_df <- subset(df, year==2020)
+key_columns <- c("gini_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+gini_m01 <- feols(gini_norm ~ eci_clusters_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_norm ~ eci_clusters_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+# emission regressions
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_emission_per_gdp", "log_gdp_ppp_pc", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+em_m01 <- feols(log_emission_per_gdp ~ eci_clusters_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(log_emission_per_gdp ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+cluster_etable <- etable(
+  gdp_m01, gdp_m08, gini_m01, gini_m08, em_m01, em_m08,
+  digits = 3,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+print(cluster_etable)
+save_etable_to_word(cluster_etable)
+
+
+
+
+
