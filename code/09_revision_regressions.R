@@ -9,6 +9,7 @@ library(lmtest)
 library(sandwich)
 library(fixest)
 library(car)
+library(AER)
 
 
 
@@ -1121,5 +1122,64 @@ em_diag_table
 
 
 
+
+
+
+
+### TOBIT models -- test for revision
+
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- fread("../outputs/eci_regression_table.csv")
+
+# IVs from 01_data_prep_complexity.ipynb
+df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
+  select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  filter(year == 2020)
+df <- merge(
+  df,
+  df_iv,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+# manipulation
+df <- df %>%
+  group_by(year) %>%
+  mutate(
+    log_gdp_usd = log10(gdp_current_USD),
+    log_gdp_ppp = log10(gdp_ppp),
+    gdp_ppp_pc = gdp_ppp / population,
+    log_gdp_ppp_pc = log10(gdp_ppp_pc),
+    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
+    gini_norm = scale(gini_mean),
+    gini_2020_2022_norm = scale(gini_mean_2020_2022),
+    log_emission = log10(total_ghg_emissions),
+    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
+    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
+    eci_software_norm = scale(eci_software),
+    eci_trade_norm = scale(eci_trade),
+    eci_tech_norm = scale(eci_tech),
+    eci_research_norm = scale(eci_research),
+    log_pop = log10(population),
+    log_nat_res = log10(natural_resources)
+  ) %>%
+  data.table()
+
+
+
+
+
+
+# --- Table 1 -- GDP per capita vs ECI software
+reg_df <- subset(df, year==2020)
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+
+summary(gdp_tobit01 <- tobit(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, left = 0, data = reg_df))
+summary(gdp_tobit08 <- tobit(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, left = 0, data = reg_df))
 
 
