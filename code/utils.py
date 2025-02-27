@@ -225,3 +225,11 @@ def add_edges(mst_edges, all_edges, nr_edges_to_add):
     software_space_el = pd.concat([mst_edges, all_edges])
     software_space_el.drop(columns=["drop"], inplace=True)
     return software_space_el
+
+
+def normalize_column_to_range(table, column_name):
+    """variable normalization for plots"""
+    min_val = table[column_name].min()
+    max_val = table[column_name].max()
+    table[column_name] = 2 * (table[column_name] - min_val) / (max_val - min_val) - 1
+    return table
