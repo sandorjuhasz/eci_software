@@ -1157,6 +1157,7 @@ df <- df %>%
     gini_2020_2022_norm = scale(gini_mean_2020_2022),
     log_emission = log10(total_ghg_emissions),
     emission_per_gdp = (total_ghg_emissions / gdp_ppp),
+    emission_per_gdp_norm = scale(emission_per_gdp),
     log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
     eci_software_norm = scale(eci_software),
     eci_trade_norm = scale(eci_trade),
@@ -1172,14 +1173,37 @@ df <- df %>%
 
 
 
-# --- Table 1 -- GDP per capita vs ECI software
+# Tobit -- GDP per capita vs ECI software
 reg_df <- subset(df, year==2020)
 reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
 key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
-
 summary(gdp_tobit01 <- tobit(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, left = 0, data = reg_df))
 summary(gdp_tobit08 <- tobit(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, left = 0, data = reg_df))
+stargazer(gdp_tobit01, gdp_tobit08, type = "text")
 
 
+# Tobit -- Gini vs ECI software
+df$gini_pc <- df$gini_mean / 100
+df$logit_gini <- log10(df$gini_pc / (1 - df$gini_pc))
+df$logit_gini <- as.numeric(df$logit_gini)
+reg_df <- subset(df, year==2020)
+key_columns <- c("logit_gini", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(gini_tobit01 <- tobit(logit_gini ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, left = 0, data = reg_df))
+summary(gini_tobit08 <- tobit(logit_gini ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, left = 0, data = reg_df))
+stargazer(gini_tobit01, gini_tobit08, type = "text")
+vcovHC(gini_tobit01, type = "HC1")
+
+# Tobit -- Emission vs ECI software
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_emission_per_gdp", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(em_tobit01 <- tobit(log_emission ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, left = -Inf, data = reg_df))
+summary(em_tobit08 <- tobit(log_emission ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, left = -Inf, data = reg_df))
+stargazer(em_tobit01, em_tobit08, type = "text")
+ 
+stargazer(gdp_tobit01, gdp_tobit08, gini_tobit01, gini_tobit08, em_tobit01, em_tobit08)
