@@ -1,0 +1,25 @@
+IV (2SLS) Estimation: Second Stage
+	model_log_gdp_ppp_pc	model_gini_norm	model_log_emission_per_gdp
+	b/se	b/se	b/se
+eci_software_norm	0.169***	-0.986***	-0.026
+	(0.033)	(0.233)	(0.049)
+eci_trade_norm	0.166***	0.272	-0.006
+	(0.039)	(0.184)	(0.041)
+eci_tech_norm	0.054	0.187	-0.025
+	(0.033)	(0.184)	(0.036)
+eci_research_norm	0.006	0.554***	-0.054**
+	(0.023)	(0.122)	(0.022)
+log_pop	-0.274***	0.704***	0.033
+	(0.035)	(0.171)	(0.042)
+log_nat_res	0.075**	0.177	0.131***
+	(0.032)	(0.129)	(0.035)
+log_gdp_ppp_pc		-0.396	0.025
+		(0.497)	(0.076)
+Observations	93.000	82.000	92.000
+R-squared	0.778	0.427	0.569
+Kleibergen-Paap LM	26.997	26.998	27.809
+Chi2 P-value	0.000	0.000	0.000
+Weak ID F-stat	537.617	387.948	469.111
+Hansen J-stat	0.000	0.000	0.000
+Durbin-Wu-Hausman Chi2	1.212	0.658	2.408
+DWH P-value	0.271	0.417	0.121
