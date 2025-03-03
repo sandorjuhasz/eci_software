@@ -57,7 +57,7 @@ egen sim_eci_software_norm = std(avg_eci_similar_spec)
 drop if missing(log_gdp_ppp_pc, eci_software_norm, eci_trade_norm, eci_tech_norm, eci_research_norm, log_pop, log_nat_res, sim_eci_software_norm)
 
 *-----------------------------------------------------------------------------------------------------
-* First-Stage Regressions
+* Baseline Model
 *-----------------------------------------------------------------------------------------------------
 foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     
@@ -70,7 +70,7 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
             log_gdp_ppp_pc log_pop log_nat_res, robust first endog(eci_software_norm)
     }
 
-    est store model_`depvar'
+    est store b_`depvar'
     
     * Store IV diagnostics
     estadd scalar KP_LM = e(idstat)
@@ -83,18 +83,8 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     estadd scalar DWH_pval = e(estatp)
 }
 
-* Export first-stage results to CSV
-estout model_log_gdp_ppp_pc model_gini_norm model_log_emission_per_gdp using "IV_Results_FirstStage.xls", replace ///
-    cells(b(fmt(3) star) se(par fmt(3))) ///
-    drop(_cons) ///
-    stats(N r2 KP_LM KP_pval KP_WF hansen DWH_chi2 DWH_pval, ///
-          labels("Observations" "R-squared" "Kleibergen-Paap LM" "Chi2 P-value" "Weak ID F-stat" "Hansen J-stat" ///
-                 "Durbin-Wu-Hausman Chi2" "DWH P-value")) ///
-    starlevels(* 0.1 ** 0.05 *** 0.01) ///
-    title("IV (2SLS) Estimation: First Stage")
-
 *-----------------------------------------------------------------------------------------------------
-* Second-Stage Regressions
+* Full Model
 *-----------------------------------------------------------------------------------------------------
 foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
 
@@ -104,10 +94,10 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     }
     else {
         ivreg2 `depvar' (eci_software_norm = sim_eci_software_norm) ///
-            eci_trade_norm eci_tech_norm eci_research_norm log_gdp_ppp_pc log_pop log_nat_res, robust first endog(eci_software_norm)
+            eci_trade_norm eci_tech_norm eci_research_norm log_gdp_ppp_pc log_pop log_nat_res, robust endog(eci_software_norm)
     }
 
-    est store model_`depvar'
+    est store f_`depvar'
     
     * Store IV diagnostics
     estadd scalar KP_LM = e(idstat)
@@ -120,12 +110,18 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     estadd scalar DWH_pval = e(estatp)
 }
 
-* Export second-stage results to CSV
-estout model_log_gdp_ppp_pc model_gini_norm model_log_emission_per_gdp using "IV_Results_SecondStage.xls", replace ///
+*-----------------------------------------------------------------------------------------------------
+* Export
+*-----------------------------------------------------------------------------------------------------
+estout b_log_gdp_ppp_pc b_gini_norm b_log_emission_per_gdp ///
+       f_log_gdp_ppp_pc f_gini_norm f_log_emission_per_gdp ///
+    using "IV_Results_Merged.xls", replace ///
     cells(b(fmt(3) star) se(par fmt(3))) ///
     drop(_cons) ///
+    mlabels("Baseline GDP" "Baseline Gini" "Baseline Emissions" ///
+            "Full Model GDP" "Full Model Gini" "Full Model Emissions") ///
     stats(N r2 KP_LM KP_pval KP_WF hansen DWH_chi2 DWH_pval, ///
           labels("Observations" "R-squared" "Kleibergen-Paap LM" "Chi2 P-value" "Weak ID F-stat" "Hansen J-stat" ///
                  "Durbin-Wu-Hausman Chi2" "DWH P-value")) ///
     starlevels(* 0.1 ** 0.05 *** 0.01) ///
-    title("IV (2SLS) Estimation: Second Stage")
+    title("IV (2SLS) Estimation: Merged Baseline and Full Models")
