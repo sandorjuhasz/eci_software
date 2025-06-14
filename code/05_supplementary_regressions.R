@@ -470,6 +470,21 @@ save_etable_to_word(emission_etable)
 # baseline
 df <- fread("../outputs/eci_regression_table.csv")
 
+
+# IVs from 01_data_prep_complexity.ipynb
+df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
+  select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  filter(year == 2020)
+df <- merge(
+  df,
+  df_iv,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
 # manipulation
 df <- df %>%
   group_by(year) %>%
@@ -494,31 +509,28 @@ df <- df %>%
   data.table()
 
 reg_df <- subset(df, year==2020)
-key_columns <- c("gini_2020_2022_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("gini_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
+gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m02 <- feols(gini_norm ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m03 <- feols(gini_norm ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m04 <- feols(gini_norm ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m05 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m06 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m07 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm01 <- feols(gini_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_ivm08 <- feols(gini_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
-gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m02 <- feols(gini_2020_2022_norm ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m03 <- feols(gini_2020_2022_norm ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m04 <- feols(gini_2020_2022_norm ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m05 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m06 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m07 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-
-
-gini_2020_2022_etable <- etable(
-  gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08,
+etable(
+  gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08, gini_ivm01, gini_ivm08,
   digits = 3,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
 )
-print(gini_2020_2022_etable)
-save_etable_to_word(gini_2020_2022_etable)
-
-
 
 
 
