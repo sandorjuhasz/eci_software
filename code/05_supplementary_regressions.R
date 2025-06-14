@@ -465,7 +465,7 @@ save_etable_to_word(emission_etable)
 
 
 
-# --- SI Gini 2020-2022 table (shorter average -- main model is 2018-2022)
+# --- SI Gini 2018-2022 table (longer average -- main model is 2020-2022)
 
 # baseline
 df <- fread("../outputs/eci_regression_table.csv")
@@ -564,13 +564,14 @@ df <- df %>%
   data.table()
 
 reg_df <- subset(df, year==2020)
-key_columns <- c("log_gdp_ppp_pc", "gini_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+#key_columns <- c("log_gdp_ppp_pc", "gini_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_ppp_pc", "gini_2020_2022_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m01 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop+ log_nat_res, vcov = "HC1", data = reg_df)
 em_m08 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
@@ -578,7 +579,7 @@ em_m08 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + eci_
 
 identical_sample_etable <- etable(
   gdp_m01, gdp_m08, gini_m01, gini_m08, em_m01, em_m08,
-  digits = 3,
+  digits = 5,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
