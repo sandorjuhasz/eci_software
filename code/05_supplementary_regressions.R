@@ -595,7 +595,11 @@ save_etable_to_word(identical_sample_etable)
 # --- SI No mathematical dependencies tables
 
 # baseline table
-df <- create_baseline_table("../outputs/eci_regression_table.csv")
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
+
 
 # GDP per capita
 reg_df <- subset(df, year==2020)
@@ -605,14 +609,23 @@ reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 gdp_m01 <- feols(log_gdp_ppp ~ eci_software_norm + log_nat_res + log_pop, vcov = "HC1", data = reg_df)
 gdp_m08 <- feols(log_gdp_ppp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_nat_res + log_pop, vcov = "HC1", data = reg_df)
 
+# base reg version for VIF
+gdp_bm01 <- lm(log_gdp_ppp ~ eci_software_norm + log_pop + log_nat_res, data = reg_df)
+gdp_bm08 <- lm(log_gdp_ppp ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+
 
 ### Gini
 reg_df <- subset(df, year==2020)
-key_columns <- c("gini_norm", "log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("gini_2020_2022_norm", "log_gdp_ppp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
-gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+
+# base reg version for VIF
+gini_bm01 <- lm(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, data = reg_df)
+gini_bm08 <- lm(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, data = reg_df)
+
 
 
 # Emissions
@@ -623,10 +636,14 @@ reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 em_m01 <- feols(log_emission ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 em_m08 <- feols(log_emission ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
+# base reg version for VIF
+em_bm01 <- lm(log_emission ~ eci_software_norm + log_gdp_ppp + log_pop + log_nat_res, data = reg_df)
+em_bm08 <- lm(log_emission ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp_ppp + log_pop + log_nat_res, data = reg_df)
+
 
 no_math_dep_etable <- etable(
   gdp_m01, gdp_m08, gini_m01, gini_m08, em_m01, em_m08,
-  digits = 3,
+  digits = 5,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
@@ -635,14 +652,30 @@ print(no_math_dep_etable)
 save_etable_to_word(no_math_dep_etable)
 
 
+# VIF values for no mathematical dependencies versions 
+car::vif(gdp_bm01)
+car::vif(gdp_bm08)
+car::vif(gini_bm01)
+car::vif(gini_bm08)
+car::vif(em_bm01)
+car::vif(em_bm08)
+
+
+
+
+
+
 
 
 
 
 # --- SI VIF tables for main regressions
 
-# baseline table
-df <- create_baseline_table("../outputs/eci_regression_table.csv")
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
 
 # GDP per capita models 2020
 reg_df <- subset(df, year==2020)
@@ -670,7 +703,8 @@ car::vif(gdp_bm08)
 
 # Gini models for 2020
 reg_df <- subset(df, year==2020)
-key_columns <- c("gini_norm", "log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
+key_columns <- c("gini_2020_2022_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 # change to lm()
@@ -725,21 +759,12 @@ car::vif(em_bm08)
 
 # --- SI stepwise IV regressions
 
-# baseline table
-df <- create_baseline_table("../outputs/eci_regression_table.csv")
-
-# IVs from 01_data_prep_complexity.ipynb
-df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
-  select(iso2_code, year, avg_eci_similar_spec) %>%
-  unique() %>%
-  filter(year == 2020)
-df <- merge(
-  df,
-  df_iv,
-  by = c("iso2_code", "year"),
-  all.x = TRUE,
-  all.y = FALSE
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
 )
+
 
 # GDP per capita -- first stage
 reg_df <- subset(df, year==2020)
