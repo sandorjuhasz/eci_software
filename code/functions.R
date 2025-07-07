@@ -9,8 +9,22 @@ library(officer)
 
 
 # for the baseline table to produce most regressions
-create_baseline_table <- function(input_path) {
-  df <- fread(input_path)
+create_baseline_table <- function(main_input_path, iv_input_path) {
+  df <- fread(main_input_path)
+  
+  # IVs from 01_data_prep_complexity.ipynb
+  df_iv <- fread(iv_input_path) %>%
+    select(iso2_code, year, avg_eci_similar_spec) %>%
+    unique() %>%
+    filter(year == 2020)
+  df <- merge(
+    df,
+    df_iv,
+    by = c("iso2_code", "year"),
+    all.x = TRUE,
+    all.y = FALSE
+  )
+  
   
   # manipulation
   df <- df %>%
