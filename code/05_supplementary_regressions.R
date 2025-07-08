@@ -174,20 +174,20 @@ etable(
 
 # Gini regressions
 reg_df <- subset(df, year==2020)
-key_columns <- c("gini_norm", "log_gdp_ppp_pc", "eci_software_norm", "eci_software075_norm", "eci_software125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("gini_2020_2022_norm", "log_gdp_ppp_pc", "eci_software_norm", "eci_software075_norm", "eci_software125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
-gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m01_075 <- feols(gini_norm ~ eci_software075_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08_075 <- feols(gini_norm ~ eci_software075_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m01_125 <- feols(gini_norm ~ eci_software125_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08_125 <- feols(gini_norm ~ eci_software125_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01_075 <- feols(gini_2020_2022_norm ~ eci_software075_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08_075 <- feols(gini_2020_2022_norm ~ eci_software075_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m01_125 <- feols(gini_2020_2022_norm ~ eci_software125_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gini_m08_125 <- feols(gini_2020_2022_norm ~ eci_software125_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
   gini_m01, gini_m08, gini_m01_075, gini_m08_075, gini_m01_125, gini_m08_125,
-  digits = 3,
+  digits = 5,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
