@@ -59,7 +59,7 @@ drop if missing(log_gdp_ppp_pc, eci_software_norm, eci_trade_norm, eci_tech_norm
 *-----------------------------------------------------------------------------------------------------
 * Baseline Model
 *-----------------------------------------------------------------------------------------------------
-foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
+foreach depvar in log_gdp_ppp_pc gini_2020_2022_norm log_emission_per_gdp {
     
     if "`depvar'" == "log_gdp_ppp_pc" {
         ivreg2 `depvar' (eci_software_norm = sim_eci_software_norm) ///
@@ -76,17 +76,18 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     estadd scalar KP_LM = e(idstat)
     estadd scalar KP_pval = e(idp)
     estadd scalar KP_WF = e(rkf)
-    estadd scalar hansen = e(j)
 
     * Store Durbin-Wu-Hausman (DWH) test results
     estadd scalar DWH_chi2 = e(estat)
     estadd scalar DWH_pval = e(estatp)
 }
 
+display %12.10f e(idp)
+
 *-----------------------------------------------------------------------------------------------------
 * Full Model
 *-----------------------------------------------------------------------------------------------------
-foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
+foreach depvar in log_gdp_ppp_pc gini_2020_2022_norm log_emission_per_gdp {
 
     if "`depvar'" == "log_gdp_ppp_pc" {
         ivreg2 `depvar' (eci_software_norm = sim_eci_software_norm) ///
@@ -103,7 +104,6 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
     estadd scalar KP_LM = e(idstat)
     estadd scalar KP_pval = e(idp)
     estadd scalar KP_WF = e(rkf)
-    estadd scalar hansen = e(j)
 
     * Store Durbin-Wu-Hausman (DWH) test results
     estadd scalar DWH_chi2 = e(estat)
@@ -113,15 +113,15 @@ foreach depvar in log_gdp_ppp_pc gini_norm log_emission_per_gdp {
 *-----------------------------------------------------------------------------------------------------
 * Export
 *-----------------------------------------------------------------------------------------------------
-estout b_log_gdp_ppp_pc b_gini_norm b_log_emission_per_gdp ///
-       f_log_gdp_ppp_pc f_gini_norm f_log_emission_per_gdp ///
+estout b_log_gdp_ppp_pc b_gini_2020_2022_norm b_log_emission_per_gdp ///
+       f_log_gdp_ppp_pc f_gini_2020_2022_norm f_log_emission_per_gdp ///
     using "IV_Results_Merged.xls", replace ///
     cells(b(fmt(3) star) se(par fmt(3))) ///
     drop(_cons) ///
     mlabels("Baseline GDP" "Baseline Gini" "Baseline Emissions" ///
             "Full Model GDP" "Full Model Gini" "Full Model Emissions") ///
-    stats(N r2 KP_LM KP_pval KP_WF hansen DWH_chi2 DWH_pval, ///
-          labels("Observations" "R-squared" "Kleibergen-Paap LM" "Chi2 P-value" "Weak ID F-stat" "Hansen J-stat" ///
+    stats(N r2 KP_LM KP_pval KP_WF DWH_chi2 DWH_pval, ///
+          labels("Observations" "R-squared" "Kleibergen-Paap LM" "Chi2 P-value" "Weak ID F-stat" ///
                  "Durbin-Wu-Hausman Chi2" "DWH P-value")) ///
     starlevels(* 0.1 ** 0.05 *** 0.01) ///
     title("IV (2SLS) Estimation: Merged Baseline and Full Models")
