@@ -37,22 +37,22 @@ def period_filter(data, years_to_consider):
     return data
 
 
-def drop_specifics_from_list(data, filter_list):
+def drop_specifics_from_list(data, filter_list, key_column="language"):
     """filter specific languages from list -- motivated by RM del Rio-Chanona et al 2023"""
-    data = data[~data["language"].str.contains(filter_list, case=False, regex=True)]
+    data = data[~data[key_column].str.contains(filter_list, case=False, regex=True)]
     return data
 
 
-def top_languages_filter(data, nr_languages):
+def top_languages_filter(data, nr_languages, key_column="language"):
     """keep top x number of languages ONLY"""
     top_languages = (
-        data.groupby(["language"])["num_pushers"]
+        data.groupby(key_column)["num_pushers"]
         .agg("mean")
         .reset_index()
         .sort_values(by="num_pushers", ascending=False)
     )
-    top_languages = list(top_languages["language"])[:nr_languages]
-    data = data[data["language"].isin(top_languages)]
+    top_languages = list(top_languages[key_column])[:nr_languages]
+    data = data[data[key_column].isin(top_languages)]
     return data
 
 
