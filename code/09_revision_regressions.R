@@ -11,7 +11,7 @@ library(sandwich)
 library(fixest)
 library(car)
 library(AER)
-
+source("functions.R")
 
 
 
@@ -667,6 +667,105 @@ etable(
 
 
 
+### ECI based on topics
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
+
+eci_topic <- fread("../outputs/eci_topics_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
+  unique() %>%
+  rename(eci_topic = eci) %>%
+  group_by(year) %>%
+  mutate(eci_topic_norm = scale(eci_topic)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  eci_topic,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+### Table 1 -- GPD vs ECI -- for replication on new World Bank Data
+reg_df <- subset(df, year==2021)
+key_columns1 <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df1 <- reg_df[complete.cases(reg_df[, ..key_columns1]), ]
+
+reg_df <- subset(df, year==2021)
+key_columns2 <- c("gini_2020_2022_norm", "eci_topic_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df2 <- reg_df[complete.cases(reg_df[, ..key_columns2]), ]
+
+reg_df <- subset(df, year==2021)
+key_columns3 <- c("log_emission_per_gdp", "eci_topic_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+reg_df3 <- reg_df[complete.cases(reg_df[, ..key_columns3]), ]
+
+
+gdp_m01_topic <- feols(log_gdp_ppp_pc ~ eci_topic_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df1)
+gdp_m08_topic <- feols(log_gdp_ppp_pc ~ eci_topic_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df1)
+gini_m01_topic <- feols(gini_2020_2022_norm ~ eci_topic_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df2)
+gini_m08_topic <- feols(gini_2020_2022_norm ~ eci_topic_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df2)
+em_m01_topic <- feols(log_emission_per_gdp ~ eci_topic_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df3)
+em_m08_topic <- feols(log_emission_per_gdp ~ eci_topic_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df3)
+
+
+etable(
+  gdp_m01_topic, gdp_m08_topic, gini_m01_topic, gini_m08_topic,# em_m01_topic, em_m08_topic,
+  digits = 5,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+
+
+
+
+
+
+# ENTRY regressions
+en_df <- fread("../outputs/data_entry_regressions_0011_topics.csv")
+en_df$rel_density <- scale(en_df$density)
+en_df$pci <- scale(en_df$pci)
+en_df$ubiquity <- scale(en_df$ubiquity)
+
+ex_df <- fread("../outputs/data_exit_regressions_1100_topics.csv")
+ex_df$rel_density <- scale(ex_df$density)
+ex_df$pci <- scale(ex_df$pci)
+ex_df$ubiquity <- scale(ex_df$ubiquity)
+
+
+ent_m1 <- feols(entry01 ~ density, cluster = "iso2_code", data = en_df)
+ent_m6 <- feols(entry01 ~ density + ubiquity, cluster = "iso2_code", data = en_df)
+ent_m7 <- feols(entry01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", data = en_df)
+
+ex_m1 <- feols(exit01 ~ density, cluster = "iso2_code", data = ex_df)
+ex_m6 <- feols(exit01 ~ density + ubiquity, cluster = "iso2_code", data = ex_df)
+ex_m7 <- feols(exit01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", data = ex_df)
+
+
+etable(
+  ent_m1, ent_m6, ent_m7, ex_m1, ex_m6, ex_m7,
+  digits = 5,
+  digits.stats = 3,
+  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
+  tex = FALSE
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1226,48 +1325,10 @@ em_diag_table
 ### TOBIT models -- test for revision
 
 # baseline dataframe from 01_data_prep_complexity.ipynb
-df <- fread("../outputs/eci_regression_table.csv")
-
-# IVs from 01_data_prep_complexity.ipynb
-df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
-  select(iso2_code, year, avg_eci_similar_spec) %>%
-  unique() %>%
-  filter(year == 2020)
-df <- merge(
-  df,
-  df_iv,
-  by = c("iso2_code", "year"),
-  all.x = TRUE,
-  all.y = FALSE
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
 )
-
-# manipulation
-df <- df %>%
-  group_by(year) %>%
-  mutate(
-    log_gdp_usd = log10(gdp_current_USD),
-    log_gdp_ppp = log10(gdp_ppp),
-    gdp_ppp_pc = gdp_ppp / population,
-    log_gdp_ppp_pc = log10(gdp_ppp_pc),
-    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
-    gini_norm = scale(gini_mean),
-    gini_2020_2022_norm = scale(gini_mean_2020_2022),
-    log_emission = log10(total_ghg_emissions),
-    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
-    emission_per_gdp_norm = scale(emission_per_gdp),
-    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
-    eci_software_norm = scale(eci_software),
-    eci_trade_norm = scale(eci_trade),
-    eci_tech_norm = scale(eci_tech),
-    eci_research_norm = scale(eci_research),
-    log_pop = log10(population),
-    log_nat_res = log10(natural_resources)
-  ) %>%
-  data.table()
-
-
-
-
 
 
 # Tobit -- GDP per capita vs ECI software
@@ -1282,7 +1343,8 @@ stargazer(gdp_tobit01, gdp_tobit08, type = "text")
 
 
 # Tobit -- Gini vs ECI software
-df$gini_pc <- df$gini_mean / 100
+#df$gini_pc <- df$gini_mean / 100
+df$gini_pc <- df$gini_mean_2020_2022 / 100
 df$logit_gini <- log10(df$gini_pc / (1 - df$gini_pc))
 df$logit_gini <- as.numeric(df$logit_gini)
 reg_df <- subset(df, year==2020)

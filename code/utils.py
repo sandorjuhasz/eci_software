@@ -95,11 +95,11 @@ def add_period_ids(data, period):
     return data
 
 
-def bundle_data(data, periods):
+def bundle_data(data, periods, key_column="language"):
     """aggreagte data for period by taking the mean number active developers"""
     data = (
         data[data["period"].isin(periods)]
-        .groupby(["iso2_code", "language"])["num_pushers"]
+        .groupby(["iso2_code", key_column])["num_pushers"]
         .agg("mean")
         .reset_index()
     )
