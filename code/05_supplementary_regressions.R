@@ -798,16 +798,18 @@ etable(
 
 
 
-
-
-
 # --- SI language clusters
 
 # baseline table
-df <- create_baseline_table("../outputs/eci_regression_table.csv")
+
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
 
 # ECI table using clusters of languages
-eci_clusters <- fread("../outputs/eci_clusters_2020_2023.csv") %>%
+eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
   dplyr::select(iso2_code, year, eci) %>%
   unique() %>%
   rename(eci_clusters = eci) %>%
@@ -829,6 +831,7 @@ reg_df <- subset(df, year==2020)
 key_columns <- c("log_gdp_ppp_pc", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
+# --- SI language clusters
 gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
 
