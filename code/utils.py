@@ -207,13 +207,11 @@ def maximum_spanning_tree(data, key_columns):
     return table[key_columns]
 
 
-def add_edges(mst_edges, all_edges, nr_edges_to_add):
+def add_edges(mst_edges, all_edges, key_columns, nr_edges_to_add):
     """add edges to the maximum spanning tree to have a 1/3 nodes/edges ratio"""
     # drop mst edges from the full edgelist
     mst_edges["drop"] = 1
-    all_edges = pd.merge(
-        all_edges, mst_edges, on=["language_1", "language_2", "proximity"], how="left"
-    )
+    all_edges = pd.merge(all_edges, mst_edges, on=key_columns, how="left")
     all_edges = all_edges[all_edges["drop"] != 1].drop(columns="drop")
 
     # sort and select
