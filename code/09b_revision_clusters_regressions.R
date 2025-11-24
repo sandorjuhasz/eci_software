@@ -180,7 +180,8 @@ etable(
 # --- Table 4 -- Entry models 0011 fashion
 
 # table from 01_data_prep_complexity.ipynb
-en_df <- fread("../outputs/data_entry_regressions_0011.csv")
+#en_df <- fread("../outputs/data_entry_regressions_0011.csv")
+en_df <- fread("../outputs/data_entry_regressions_0011_clusters_cooc.csv")
 
 # normalize
 en_df$rel_density <- scale(en_df$density)
@@ -189,8 +190,8 @@ en_df$ubiquity <- scale(en_df$ubiquity)
 
 ent_m1 <- feols(entry01 ~ density, cluster = "iso2_code", data = en_df)
 ent_m2 <- feols(entry01 ~ density | iso2_code, cluster = "iso2_code", data = en_df)
-ent_m3 <- feols(entry01 ~ density | language, cluster = "iso2_code", data = en_df)
-ent_m4 <- feols(entry01 ~ density | iso2_code + language, cluster = "iso2_code", data = en_df)
+ent_m3 <- feols(entry01 ~ density | cluster_id, cluster = "iso2_code", data = en_df)
+ent_m4 <- feols(entry01 ~ density | iso2_code + cluster_id, cluster = "iso2_code", data = en_df)
 ent_m5 <- feols(entry01 ~ ubiquity, cluster = "iso2_code", data = en_df)
 ent_m6 <- feols(entry01 ~ density + ubiquity, cluster = "iso2_code", data = en_df)
 ent_m7 <- feols(entry01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", data = en_df)
@@ -212,7 +213,8 @@ etable(
 # --- Table 5 -- Exit models 1100 fashion
 
 # table from 01_data_prep_complexity.ipynb
-ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
+#ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
+ex_df <- fread("../outputs/data_exit_regressions_1100_clusters_cooc.csv")
 
 # normalize
 ex_df$rel_density <- scale(ex_df$density)
@@ -221,8 +223,8 @@ ex_df$ubiquity <- scale(ex_df$ubiquity)
 
 ex_m1 <- feols(exit01 ~ density, cluster = "iso2_code", data = ex_df)
 ex_m2 <- feols(exit01 ~ density | iso2_code, cluster = "iso2_code", data = ex_df)
-ex_m3 <- feols(exit01 ~ density | language, cluster = "iso2_code", data = ex_df)
-ex_m4 <- feols(exit01 ~ density | iso2_code + language, cluster = "iso2_code", data = ex_df)
+ex_m3 <- feols(exit01 ~ density | cluster_id, cluster = "iso2_code", data = ex_df)
+ex_m4 <- feols(exit01 ~ density | iso2_code + cluster_id, cluster = "iso2_code", data = ex_df)
 ex_m5 <- feols(exit01 ~ ubiquity, cluster = "iso2_code", data = ex_df)
 ex_m6 <- feols(exit01 ~ density + ubiquity, cluster = "iso2_code", data = ex_df)
 ex_m7 <- feols(exit01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", data = ex_df)
