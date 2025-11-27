@@ -35,6 +35,8 @@ create_baseline_table <- function(main_input_path, iv_input_path) {
       gdp_ppp_pc = gdp_ppp / population,
       log_gdp_ppp_pc = log10(gdp_ppp_pc),
       log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
+      ln_gdp_ppp_pc = log(gdp_ppp_pc),
+      ln_gdp_ppp_pc2 = ln_gdp_ppp_pc^2,
       gini_norm = scale(gini_mean),
       gini_2020_2022_norm = scale(gini_mean_2020_2022),
       log_emission = log10(total_ghg_emissions),
@@ -45,7 +47,9 @@ create_baseline_table <- function(main_input_path, iv_input_path) {
       eci_tech_norm = scale(eci_tech),
       eci_research_norm = scale(eci_research),
       log_pop = log10(population),
-      log_nat_res = log10(natural_resources)
+      ln_pop = log(population),
+      log_nat_res = log10(natural_resources),
+      ln_nat_res = log(natural_resources)
     ) %>%
     data.table()
   

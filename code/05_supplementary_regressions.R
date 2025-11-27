@@ -32,7 +32,7 @@ source("../code/functions.R")
 
 
 # --- SI Entry logit
-en_df <- fread("../outputs/data_entry_regressions_0011.csv")
+en_df <- fread("../outputs/data_entry_regressions_0011_clusters_cooc.csv")
 
 # normalize
 en_df$rel_density <- scale(en_df$density)
@@ -41,8 +41,8 @@ en_df$ubiquity <- scale(en_df$ubiquity)
 
 logit_ent_m1 <- feglm(entry01 ~ density, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
 logit_ent_m2 <- feglm(entry01 ~ density | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
-logit_ent_m3 <- feglm(entry01 ~ density | language, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
-logit_ent_m4 <- feglm(entry01 ~ density | iso2_code + language, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m3 <- feglm(entry01 ~ density | cluster_id, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
+logit_ent_m4 <- feglm(entry01 ~ density | iso2_code + cluster_id, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
 logit_ent_m5 <- feglm(entry01 ~ ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
 logit_ent_m6 <- feglm(entry01 ~ density + ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
 logit_ent_m7 <- feglm(entry01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = en_df)
@@ -50,7 +50,7 @@ logit_ent_m7 <- feglm(entry01 ~ density + ubiquity | iso2_code, cluster = "iso2_
 etable(
   logit_ent_m1, logit_ent_m2, logit_ent_m3, logit_ent_m4, logit_ent_m5, logit_ent_m6, logit_ent_m7,
   #fitstat = ~ r2,
-  digits = 3,
+  digits = 5,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
@@ -62,7 +62,7 @@ etable(
 
 
 # --- SI Exit logit
-ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
+ex_df <- fread("../outputs/data_exit_regressions_1100_clusters_cooc.csv")
 
 # normalize
 ex_df$rel_density <- scale(ex_df$density)
@@ -71,15 +71,15 @@ ex_df$ubiquity <- scale(ex_df$ubiquity)
 
 logit_ex_m1 <- feglm(exit01 ~ density, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
 logit_ex_m2 <- feglm(exit01 ~ density | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
-logit_ex_m3 <- feglm(exit01 ~ density | language, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
-logit_ex_m4 <- feglm(exit01 ~ density | iso2_code + language, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m3 <- feglm(exit01 ~ density | cluster_id, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
+logit_ex_m4 <- feglm(exit01 ~ density | iso2_code + cluster_id, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
 logit_ex_m5 <- feglm(exit01 ~ ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
 logit_ex_m6 <- feglm(exit01 ~ density + ubiquity, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
 logit_ex_m7 <- feglm(exit01 ~ density + ubiquity | iso2_code, cluster = "iso2_code", family = binomial(link = "logit"), data = ex_df)
 
 etable(
   logit_ex_m1, logit_ex_m2, logit_ex_m3, logit_ex_m4, logit_ex_m5, logit_ex_m6, logit_ex_m7,
-  digits = 3,
+  digits = 5,
   digits.stats = 3,
   signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
   tex = FALSE
@@ -300,7 +300,45 @@ etable(
 
 
 # dataframe from 01_data_prep.ipynb
-df <- fread("../outputs/eci_regression_table.csv")
+#df <- fread("../outputs/eci_regression_table.csv")
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
+
+# ECI table using clusters of languages
+eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
+  unique() %>%
+  rename(eci_clusters = eci) %>%
+  group_by(year) %>%
+  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  eci_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+iv_clusters <- fread("../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv") %>%
+  dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  rename(sim_eci_clusters = avg_eci_similar_spec) %>%
+  group_by(year) %>%
+  mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  iv_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
 
 # calculate growth for cross sectional growth models
 t1 <- 2020
@@ -342,31 +380,31 @@ df <- df %>%
   group_by(year) %>%
   mutate(
     log_gdp = log10(gdp_current_USD),
-    log_gdp_growth_t12 = log10(gdp_growth_t12),
-    eci_software_norm = scale(eci_software),
-    eci_trade_norm = scale(eci_trade),
-    eci_tech_norm = scale(eci_tech),
-    eci_research_norm = scale(eci_research),
-    log_pop = log10(population),
-    log_nat_res = log10(natural_resources)
+    log_gdp_growth_t12 = log10(gdp_growth_t12)
+    #eci_software_norm = scale(eci_software),
+    #eci_trade_norm = scale(eci_trade),
+    #eci_tech_norm = scale(eci_tech),
+    #eci_research_norm = scale(eci_research),
+    #log_pop = log10(population),
+    #log_nat_res = log10(natural_resources)
   ) %>%
   data.table()
 
 
 ### GDP growth vs ECI -- cross sectional growth from 2020-2023
 reg_df <- subset(df, year==2020)
-key_columns <- c("log_gdp_growth_t12", "log_gdp", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_growth_t12", "log_gdp", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_pop", "ln_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 grm00 <- feols(log_gdp_growth_t12 ~ log_gdp, vcov = "HC1", data = reg_df)
-grm01 <- feols(log_gdp_growth_t12 ~ eci_software_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm02 <- feols(log_gdp_growth_t12 ~ eci_trade_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm03 <- feols(log_gdp_growth_t12 ~ eci_tech_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm04 <- feols(log_gdp_growth_t12 ~ eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm05 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_trade_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm06 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_tech_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm07 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-grm08 <- feols(log_gdp_growth_t12 ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+grm01 <- feols(log_gdp_growth_t12 ~ eci_clusters_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm02 <- feols(log_gdp_growth_t12 ~ eci_trade_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm03 <- feols(log_gdp_growth_t12 ~ eci_tech_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm04 <- feols(log_gdp_growth_t12 ~ eci_research_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm05 <- feols(log_gdp_growth_t12 ~ eci_clusters_norm + eci_trade_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm06 <- feols(log_gdp_growth_t12 ~ eci_clusters_norm + eci_tech_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm07 <- feols(log_gdp_growth_t12 ~ eci_clusters_norm + eci_research_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+grm08 <- feols(log_gdp_growth_t12 ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_gdp + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
@@ -447,115 +485,61 @@ save_etable_to_word(emission_etable)
 
 
 
-# --- SI Gini 2018-2022 table (longer average -- main model is 2020-2022)
 
-# baseline
-df <- fread("../outputs/eci_regression_table.csv")
+# --- SI Identical samples regressions
 
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
 
-# IVs from 01_data_prep_complexity.ipynb
-df_iv <- fread("../outputs/si_eci_software_2020_2023_ivreg.csv") %>%
-  select(iso2_code, year, avg_eci_similar_spec) %>%
+# ECI table using clusters of languages
+eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
   unique() %>%
-  filter(year == 2020)
+  rename(eci_clusters = eci) %>%
+  group_by(year) %>%
+  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
+  data.table()
+
 df <- merge(
   df,
-  df_iv,
+  eci_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+iv_clusters <- fread("../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv") %>%
+  dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  rename(sim_eci_clusters = avg_eci_similar_spec) %>%
+  group_by(year) %>%
+  mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  iv_clusters,
   by = c("iso2_code", "year"),
   all.x = TRUE,
   all.y = FALSE
 )
 
 
-# manipulation
-df <- df %>%
-  group_by(year) %>%
-  mutate(
-    log_gdp_usd = log10(gdp_current_USD),
-    log_gdp_ppp = log10(gdp_ppp),
-    gdp_ppp_pc = gdp_ppp / population,
-    log_gdp_ppp_pc = log10(gdp_ppp_pc),
-    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
-    gini_norm = scale(gini_mean),
-    gini_2020_2022_norm = scale(gini_mean_2020_2022),
-    log_emission = log10(total_ghg_emissions),
-    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
-    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
-    eci_software_norm = scale(eci_software),
-    eci_trade_norm = scale(eci_trade),
-    eci_tech_norm = scale(eci_tech),
-    eci_research_norm = scale(eci_research),
-    log_pop = log10(population),
-    log_nat_res = log10(natural_resources)
-  ) %>%
-  data.table()
-
-reg_df <- subset(df, year==2020)
-reg_df$sim_eci_software_norm <- scale(reg_df$avg_eci_similar_spec)
-key_columns <- c("gini_norm", "log_gdp_ppp_pc", "log_gdp_ppp_pc2", "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res", "sim_eci_software_norm")
-reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
-
-gini_m01 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m02 <- feols(gini_norm ~ eci_trade_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m03 <- feols(gini_norm ~ eci_tech_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m04 <- feols(gini_norm ~ eci_research_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m05 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m06 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_tech_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m07 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm01 <- feols(gini_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_ivm08 <- feols(gini_norm ~ 1 | eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res ~ sim_eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-
-etable(
-  gini_m01, gini_m02, gini_m03, gini_m04, gini_m05, gini_m06, gini_m07, gini_m08, gini_ivm01, gini_ivm08,
-  digits = 3,
-  digits.stats = 3,
-  signif.code = c("***"=0.01, "**"=0.05, "*"=0.1),
-  tex = FALSE
-)
-
-
-
-
-# --- SI Identical samples regressions
-
-# baseline
-df <- fread("../outputs/eci_regression_table.csv")
-
-# manipulation
-df <- df %>%
-  group_by(year) %>%
-  mutate(
-    log_gdp_usd = log10(gdp_current_USD),
-    log_gdp_ppp = log10(gdp_ppp),
-    gdp_ppp_pc = gdp_ppp / population,
-    log_gdp_ppp_pc = log10(gdp_ppp_pc),
-    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
-    gini_norm = scale(gini_mean),
-    gini_2020_2022_norm = scale(gini_mean_2020_2022),
-    log_emission = log10(total_ghg_emissions),
-    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
-    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
-    eci_software_norm = scale(eci_software),
-    eci_trade_norm = scale(eci_trade),
-    eci_tech_norm = scale(eci_tech),
-    eci_research_norm = scale(eci_research),
-    log_pop = log10(population),
-    log_nat_res = log10(natural_resources)
-  ) %>%
-  data.table()
 
 reg_df <- subset(df, year==2020)
 #key_columns <- c("log_gdp_ppp_pc", "gini_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
-key_columns <- c("log_gdp_ppp_pc", "gini_2020_2022_norm", "log_emission_per_gdp",  "eci_software_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_ppp_pc", "gini_2020_2022_norm", "log_emission_per_gdp",  "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_gdp_ppp_pc", "ln_pop", "ln_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
-gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m01 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gini_m08 <- feols(gini_2020_2022_norm ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-em_m01 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + log_pop+ log_nat_res, vcov = "HC1", data = reg_df)
-em_m08 <- feols(log_emission_per_gdp ~ eci_software_norm + log_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gini_m01 <- feols(gini_2020_2022_norm ~ eci_clusters_norm + ln_gdp_ppp_pc + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gini_m08 <- feols(gini_2020_2022_norm ~ eci_clusters_norm + ln_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+em_m01 <- feols(log_emission_per_gdp ~ eci_clusters_norm + ln_gdp_ppp_pc + ln_pop+ ln_nat_res, vcov = "HC1", data = reg_df)
+em_m08 <- feols(log_emission_per_gdp ~ eci_clusters_norm + ln_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
 
 
 
