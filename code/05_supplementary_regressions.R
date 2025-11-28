@@ -92,34 +92,50 @@ etable(
 
 # --- SI different RCA thresholds
 
-# baseline -- RCA >= 1
-df <- fread("../outputs/eci_regression_table.csv")
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
 
-# manipulation
-df <- df %>%
+# ECI table using clusters of languages
+eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
+  unique() %>%
+  rename(eci_clusters = eci) %>%
   group_by(year) %>%
-  mutate(
-    log_gdp_usd = log10(gdp_current_USD),
-    log_gdp_ppp = log10(gdp_ppp),
-    gdp_ppp_pc = gdp_ppp / population,
-    log_gdp_ppp_pc = log10(gdp_ppp_pc),
-    log_gdp_ppp_pc2 = log_gdp_ppp_pc^2,
-    gini_norm = scale(gini_mean),
-    gini_2020_2022_norm = scale(gini_mean_2020_2022),
-    log_emission = log10(total_ghg_emissions),
-    emission_per_gdp = (total_ghg_emissions / gdp_ppp),
-    log_emission_per_gdp = log10(total_ghg_emissions / gdp_ppp),
-    eci_software_norm = scale(eci_software),
-    eci_trade_norm = scale(eci_trade),
-    eci_tech_norm = scale(eci_tech),
-    eci_research_norm = scale(eci_research),
-    log_pop = log10(population),
-    log_nat_res = log10(natural_resources)
-  ) %>%
+  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
   data.table()
 
+df <- merge(
+  df,
+  eci_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+iv_clusters <- fread("../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv") %>%
+  dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  rename(sim_eci_clusters = avg_eci_similar_spec) %>%
+  group_by(year) %>%
+  mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  iv_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+
+
 # threshold 0.75
-cdf075 <- fread("../outputs/eci_software_2020_2023_threshold_075.csv") %>%
+cdf075 <- fread("../outputs/eci_clusters_cooc_2020_2023_threshold_75.csv") %>%
   dplyr::filter(year==2020) %>%
   dplyr::select(iso2_code, year, eci) %>%
   mutate(eci_software075_norm = scale(eci)) %>%
@@ -127,7 +143,7 @@ cdf075 <- fread("../outputs/eci_software_2020_2023_threshold_075.csv") %>%
   unique()
 
 # threshold 1.25
-cdf125 <- fread("../outputs/eci_software_2020_2023_threshold_125.csv") %>%
+cdf125 <- fread("../outputs/eci_clusters_cooc_2020_2023_threshold_125.csv") %>%
   dplyr::filter(year==2020) %>%
   dplyr::select(iso2_code, year, eci) %>%
   mutate(eci_software125_norm = scale(eci)) %>%
@@ -152,7 +168,7 @@ df <- merge(
 
 # GDP per capita
 reg_df <- subset(df, year==2020)
-key_columns <- c("log_gdp_ppp_pc", "eci_software_norm", "eci_software075_norm", "eci_software125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_ppp_pc", "eci_cluster_norm", "eci_software075_norm", "eci_software125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
 gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
