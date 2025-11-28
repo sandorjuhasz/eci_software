@@ -849,3 +849,84 @@ save_etable_to_word(cluster_etable)
 
 
 
+
+
+### TOBIT models -- test for revision
+
+
+# baseline dataframe from 01_data_prep_complexity.ipynb
+df <- create_baseline_table(
+  main_input_path = "../outputs/eci_regression_table.csv",
+  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+)
+
+# ECI table using clusters of languages
+eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
+  dplyr::select(iso2_code, year, eci) %>%
+  unique() %>%
+  rename(eci_clusters = eci) %>%
+  group_by(year) %>%
+  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  eci_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+iv_clusters <- fread("../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv") %>%
+  dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
+  unique() %>%
+  rename(sim_eci_clusters = avg_eci_similar_spec) %>%
+  group_by(year) %>%
+  mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
+  data.table()
+
+df <- merge(
+  df,
+  iv_clusters,
+  by = c("iso2_code", "year"),
+  all.x = TRUE,
+  all.y = FALSE
+)
+
+
+# Tobit -- GDP per capita vs ECI software
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_gdp_ppp_pc", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_pop", "ln_nat_res", "sim_eci_clusters_norm")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(gdp_tobit01 <- tobit(log_gdp_ppp_pc ~ eci_clusters_norm + ln_pop + ln_nat_res, left = 0, data = reg_df))
+summary(gdp_tobit08 <- tobit(log_gdp_ppp_pc ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, left = 0, data = reg_df))
+stargazer(gdp_tobit01, gdp_tobit08, type = "text")
+
+
+# Tobit -- Gini vs ECI software
+#df$gini_pc <- df$gini_mean / 100
+df$gini_pc <- df$gini_mean_2020_2022 / 100
+df$logit_gini <- log10(df$gini_pc / (1 - df$gini_pc))
+df$logit_gini <- as.numeric(df$logit_gini)
+reg_df <- subset(df, year==2020)
+key_columns <- c("logit_gini", "ln_gdp_ppp_pc", "ln_gdp_ppp_pc2", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_pop", "ln_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(gini_tobit01 <- tobit(logit_gini ~ eci_clusters_norm + ln_gdp_ppp_pc + ln_pop + ln_nat_res, left = 0, data = reg_df))
+summary(gini_tobit08 <- tobit(logit_gini ~ eci_clusters_norm + ln_gdp_ppp_pc + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, left = 0, data = reg_df))
+stargazer(gini_tobit01, gini_tobit08, type = "text")
+vcovHC(gini_tobit01, type = "HC1")
+
+# Tobit -- Emission vs ECI software
+reg_df <- subset(df, year==2020)
+key_columns <- c("log_emission_per_gdp", "ln_gdp_ppp_pc", "eci_clusters_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_pop", "ln_nat_res")
+reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
+
+summary(em_tobit01 <- tobit(log_emission ~ eci_clusters_norm + ln_gdp_ppp_pc + ln_pop + ln_nat_res, left = -Inf, data = reg_df))
+summary(em_tobit08 <- tobit(log_emission ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_gdp_ppp_pc + ln_pop + ln_nat_res, left = -Inf, data = reg_df))
+stargazer(em_tobit01, em_tobit08, type = "text")
+
+stargazer(gdp_tobit01, gdp_tobit08, gini_tobit01, gini_tobit08, em_tobit01, em_tobit08)
+
+
