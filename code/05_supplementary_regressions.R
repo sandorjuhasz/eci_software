@@ -138,7 +138,7 @@ df <- merge(
 cdf075 <- fread("../outputs/eci_clusters_cooc_2020_2023_threshold_75.csv") %>%
   dplyr::filter(year==2020) %>%
   dplyr::select(iso2_code, year, eci) %>%
-  mutate(eci_software075_norm = scale(eci)) %>%
+  mutate(eci_clusters_075_norm = scale(eci)) %>%
   dplyr::select(-eci) %>%
   unique()
 
@@ -146,7 +146,7 @@ cdf075 <- fread("../outputs/eci_clusters_cooc_2020_2023_threshold_75.csv") %>%
 cdf125 <- fread("../outputs/eci_clusters_cooc_2020_2023_threshold_125.csv") %>%
   dplyr::filter(year==2020) %>%
   dplyr::select(iso2_code, year, eci) %>%
-  mutate(eci_software125_norm = scale(eci)) %>%
+  mutate(eci_clusters_125_norm = scale(eci)) %>%
   dplyr::select(-eci) %>%
   unique()
 
@@ -168,15 +168,15 @@ df <- merge(
 
 # GDP per capita
 reg_df <- subset(df, year==2020)
-key_columns <- c("log_gdp_ppp_pc", "eci_cluster_norm", "eci_software075_norm", "eci_software125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "log_pop", "log_nat_res")
+key_columns <- c("log_gdp_ppp_pc", "eci_clusters_norm", "eci_clusters_075_norm", "eci_clusters_125_norm", "eci_trade_norm", "eci_tech_norm", "eci_research_norm", "ln_pop", "ln_nat_res")
 reg_df <- reg_df[complete.cases(reg_df[, ..key_columns]), ]
 
-gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_software_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_software_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m01_075 <- feols(log_gdp_ppp_pc ~ eci_software075_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m08_075 <- feols(log_gdp_ppp_pc ~ eci_software075_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m01_125 <- feols(log_gdp_ppp_pc ~ eci_software125_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
-gdp_m08_125 <- feols(log_gdp_ppp_pc ~ eci_software125_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + log_pop + log_nat_res, vcov = "HC1", data = reg_df)
+gdp_m01 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08 <- feols(log_gdp_ppp_pc ~ eci_clusters_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m01_075 <- feols(log_gdp_ppp_pc ~ eci_clusters_075_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08_075 <- feols(log_gdp_ppp_pc ~ eci_clusters_075_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m01_125 <- feols(log_gdp_ppp_pc ~ eci_clusters_125_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
+gdp_m08_125 <- feols(log_gdp_ppp_pc ~ eci_clusters_125_norm + eci_trade_norm + eci_tech_norm + eci_research_norm + ln_pop + ln_nat_res, vcov = "HC1", data = reg_df)
 
 
 etable(
