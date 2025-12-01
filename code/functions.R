@@ -8,7 +8,7 @@ library(officer)
 
 
 
-# for the baseline table to produce most regressions
+# for the baseline table to produce most regressions -- programming langauge based
 create_baseline_table <- function(main_input_path, iv_input_path) {
   df <- fread(main_input_path)
   
@@ -57,6 +57,48 @@ create_baseline_table <- function(main_input_path, iv_input_path) {
 }
 
 
+
+
+
+
+# add ECI table using co-occurrence clusters -- eci_clusters
+# requires baseline table with language based variables already loaded
+add_clusters_cooc_variables <- function(main_input_path, iv_input_path) {
+  # load and transform cluster cooc based table
+  eci_clusters <- fread(main_input_path) %>%
+    dplyr::select(iso2_code, year, eci) %>%
+    unique() %>%
+    rename(eci_clusters = eci) %>%
+    group_by(year) %>%
+    mutate(eci_clusters_norm = scale(eci_clusters)) %>%
+    data.table()
+  
+  # combine language and cluster based measures
+  df <- merge(
+    df,
+    eci_clusters,
+    by = c("iso2_code", "year"),
+    all.x = TRUE,
+    all.y = FALSE
+  )
+  
+  # for eci_clusters instrument
+  iv_clusters <- fread(iv_input_path) %>%
+    dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
+    unique() %>%
+    rename(sim_eci_clusters = avg_eci_similar_spec) %>%
+    group_by(year) %>%
+    mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
+    data.table()
+  
+  df <- merge(
+    df,
+    iv_clusters,
+    by = c("iso2_code", "year"),
+    all.x = TRUE,
+    all.y = FALSE
+  )
+}
 
 
 
