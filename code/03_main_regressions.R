@@ -22,44 +22,15 @@ source("functions.R")
 
 
 # baseline dataframe from 01_data_prep_complexity.ipynb
-
-# baseline dataframe from 01_data_prep_complexity.ipynb
+# language based
 df <- create_baseline_table(
   main_input_path = "../outputs/eci_regression_table.csv",
   iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
 )
-
-# ECI table using clusters of languages
-eci_clusters <- fread("../outputs/eci_clusters_cooc_2020_2023.csv") %>%
-  dplyr::select(iso2_code, year, eci) %>%
-  unique() %>%
-  rename(eci_clusters = eci) %>%
-  group_by(year) %>%
-  mutate(eci_clusters_norm = scale(eci_clusters)) %>%
-  data.table()
-
-df <- merge(
-  df,
-  eci_clusters,
-  by = c("iso2_code", "year"),
-  all.x = TRUE,
-  all.y = FALSE
-)
-
-iv_clusters <- fread("../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv") %>%
-  dplyr::select(iso2_code, year, avg_eci_similar_spec) %>%
-  unique() %>%
-  rename(sim_eci_clusters = avg_eci_similar_spec) %>%
-  group_by(year) %>%
-  mutate(sim_eci_clusters_norm = scale(sim_eci_clusters)) %>%
-  data.table()
-
-df <- merge(
-  df,
-  iv_clusters,
-  by = c("iso2_code", "year"),
-  all.x = TRUE,
-  all.y = FALSE
+# clusters based
+df <- add_clusters_cooc_variables(
+  main_input_path = "../outputs/eci_clusters_cooc_2020_2023.csv",
+  iv_input_path = "../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv"
 )
 
 
