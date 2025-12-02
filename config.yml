@@ -1,0 +1,3 @@
+focal_year: 2020
+selected_period: "year" # parameter to choose year / semester / quarter to construct period IDs
+github_activity_NA: "#a9acb0"
