@@ -7,9 +7,14 @@ This repository contains data and code to reproduce the figures and results of t
 Juhász, S., Wachs, J., Kaminski, J. and Hidalgo, C. A. (2024) The Software Complexity of Nations. [https://arxiv.org/abs/2407.13880](https://arxiv.org/abs/2407.13880)
 
 
-Structure of the repository:
-
-`code` : numbered codes for data preparation, modelling and figures<br>
-`data` : folder for raw data sources<br>
-`outputs` : collection of processed datasets and regression outputs <br>
-`figures` : folder for polished figures<br>
+**Structure of the repository**
+```
+├── code/                     
+│   ├── data_processing/      # Scripts and notebooks for cleaning and preparing data
+│   ├── figures/              # Notebooks for generating plots and visualizations
+│   ├── estimations/          # Code for running regression models and statistical analyses
+│
+├── data/
+│   ├── inputs/               # External raw data sources
+│   ├── outputs/              # Processed and intermediate datasets
+```
