@@ -9,10 +9,12 @@ Juhász, S., Wachs, J., Kaminski, J. and Hidalgo, C. A. (2024) The Software Comp
 
 **Structure of the repository**
 ```
+├── config.yml                # Global project configuration (paths, parameters, settings)
 ├── code/                     
 │   ├── data_processing/      # Scripts and notebooks for cleaning and preparing data
 │   ├── figures/              # Notebooks for generating plots and visualizations
-│   ├── estimations/          # Code for running regression models and statistical analyses
+│   ├── regressions/          # Code for running regression models and statistical analyses
+│   ├── utils/                # Helper functions, shared modules, and general utilities
 │
 ├── data/
 │   ├── inputs/               # External raw data sources
