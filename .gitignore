@@ -1,3 +1,5 @@
 .DS_Store
 code/.RData
 code/.Rhistory
+__pycache__/
+*.pyc
