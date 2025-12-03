@@ -104,7 +104,7 @@ add_clusters_cooc_variables <- function(main_input_path, iv_input_path) {
 
 
 # to save etable regression table as a docx
-save_etable_to_word <- function(etable_output, file_name = "../outputs/etable_output.docx") {
+save_etable_to_word <- function(etable_output, file_name = "../../data/outputs/etable_output.docx") {
   # convert etable output to a dataframe
   etable_df <- as.data.frame(etable_output)
   

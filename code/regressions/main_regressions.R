@@ -17,20 +17,20 @@ library(stargazer)
 library(lmtest)
 library(sandwich)
 library(fixest)
-source("functions.R")
+source("../utils/functions.R")
 
 
 
 # baseline dataframe from 01_data_prep_complexity.ipynb
 # language based
 df <- create_baseline_table(
-  main_input_path = "../outputs/eci_regression_table.csv",
-  iv_input_path = "../outputs/si_eci_software_2020_2023_ivreg.csv"
+  main_input_path = "../../data/outputs/eci_regression_table.csv",
+  iv_input_path = "../../data/outputs/si_eci_software_2020_2023_ivreg.csv"
 )
 # clusters based
 df <- add_clusters_cooc_variables(
-  main_input_path = "../outputs/eci_clusters_cooc_2020_2023.csv",
-  iv_input_path = "../outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv"
+  main_input_path = "../../data/outputs/eci_clusters_cooc_2020_2023.csv",
+  iv_input_path = "../../data/outputs/si_eci_clusters_cooc_2020_2023_ivreg.csv"
 )
 
 
@@ -102,7 +102,7 @@ gini_2020_2022_etable <- etable(
   tex = FALSE
 )
 print(gini_2020_2022_etable)
-save_etable_to_word(gini_2020_2022_etable)
+#save_etable_to_word(gini_2020_2022_etable)
 
 
 
@@ -148,7 +148,7 @@ etable(
 
 # table from 01_data_prep_complexity.ipynb
 #en_df <- fread("../outputs/data_entry_regressions_0011.csv")
-en_df <- fread("../outputs/data_entry_regressions_0011_clusters_cooc.csv")
+en_df <- fread("../../data/outputs/data_entry_regressions_0011_clusters_cooc.csv")
 
 # normalize
 en_df$rel_density <- scale(en_df$density)
@@ -181,7 +181,7 @@ etable(
 
 # table from 01_data_prep_complexity.ipynb
 #ex_df <- fread("../outputs/data_exit_regressions_1100.csv")
-ex_df <- fread("../outputs/data_exit_regressions_1100_clusters_cooc.csv")
+ex_df <- fread("../../data/outputs/data_exit_regressions_1100_clusters_cooc.csv")
 
 # normalize
 ex_df$rel_density <- scale(ex_df$density)
