@@ -16,15 +16,15 @@ def download_file(url, path):
 
 def download_github_data(files):
     print("Downloading data from GitHub Innovation Graph")
-    if not os.path.exists("../data"):
-        os.makedirs("../data")
+    if not os.path.exists("../../data/inputs"):
+        os.makedirs("../../data/inputs")
 
     for i in files:
-        if not os.path.exists(f"../data/{i}"):
+        if not os.path.exists(f"../../data/inputs/{i}"):
             print(f"{i} not found, downloading...")
             download_file(
                 f"https://raw.githubusercontent.com/github/innovationgraph/main/data/{i}",
-                f"../data/{i}",
+                f"../../data/inputs/{i}",
             )
         else:
             print(f"{i} already exists")
