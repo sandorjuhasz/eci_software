@@ -4,9 +4,7 @@
 
 This repository contains data and code to reproduce the figures and results of the following working paper:
 
-Juhász, S., Wachs, J., Kaminski, J. and Hidalgo, C. A. (2026) The software complexity of nations. **Research Policy**, https://doi.org/10.1016/j.respol.2026.105422 (in press).
-
-Working paper: [https://arxiv.org/abs/2407.13880](https://arxiv.org/abs/2407.13880)
+Juhász, S., Wachs, J., Kaminski, J. and Hidalgo, C. A. (2026) The software complexity of nations. **Research Policy**, 55(3), 105422. https://doi.org/10.1016/j.respol.2026.105422
 
 
 **Structure of the repository**
