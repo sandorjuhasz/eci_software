@@ -1,6 +1,5 @@
 ## Software Economic Complexity
 
-**work-in-progress**
 
 This repository contains data and code to reproduce the figures and results of the following working paper:
 
